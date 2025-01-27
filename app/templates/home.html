@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        a {
+            text-decoration: none; 
+            color: black;
+        }
+        
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        main {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .sidebar, .topics, .pinned {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+            flex: 1;
+        }
+        .sidebar {
+            margin-right: 20px;
+        }
+        .pinned {
+            margin-left: 20px;
+            background-color: transparent;
+            box-shadow: none;
+            border: none;
+            padding: 0;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            width: 100%;
+            font-family: 'Montserrat', sans-serif;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .topic, .pinned-post {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            position: relative;
+            text-align: center;
+        }
+        .topic-title, .post-title { 
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .actions button {
+            background-color: #f1f1f1;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .actions button:hover {
+            background-color: #ddd;
+        }
+        .section-title {
+            color: #000;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .pinned-post {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .pinned-post .post-title {
+            font-size: 24px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Media Queries for Mobile Devices */
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+                align-items: center;
+            }
+            .sidebar, .topics, .pinned {
+                width: 90%;
+                margin: 10px auto;
+            }
+            .sidebar {
+                margin-right: 0;
+            }
+            .pinned {
+                margin-left: 0;
+            }
+            header {
+                padding: 10px;
+            }
+            .topic-title, .post-title {
+                font-size: 24px;
+            }
+            .actions button {
+                padding: 10px 15px;
+                font-size: 12px;
+            }
+            .section-title {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+            header a {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            .topic-title, .post-title {
+                font-size: 20px;
+            }
+            .actions button {
+                padding: 8px 12px;
+                font-size: 10px;
+            }
+            .section-title {
+                font-size: 16px;
+            }
+            .sidebar, .topics, .pinned {
+                padding: 15px;
+            }
+            button {
+                padding: 10px;
+                font-size: 14px;
+            }
+            .topic, .pinned-post {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Bookmark</div>
+        <nav>
+            spaceocean@mail.ru
+            <a href="#">Выход</a>
+        </nav>
+    </header>
+    <main>
+        <div class="sidebar">
+            <button>Добавить новую тему</button>
+            <div class="topics">
+                <div class="topic">
+                    <div class="topic-title">
+                    <a href="#">Фильмы</a></div>
+                    <div class="actions">
+                        <button>Редактировать</button>
+                        <button>Удалить</button>
+                    </div>
+                </div>
+                <div class="topic">
+                    <div class="topic-title">
+                    <a href="#">Купить для дома</a></div>
+                    <div class="actions">
+                        <button>Редактировать</button>
+                        <button>Удалить</button>
+                    </div>
+                </div>
+                <div class="topic">
+                    <div class="topic-title">
+                    <a href="#">Насущные дела</a></div>
+                    <div class="actions">
+                        <button>Редактировать</button>
+                        <button>Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pinned">
+            <div class="section-title">Закрепленные записи</div>
+            <div class="pinned-post">
+                <div class="post-title">Подрезать провод у светильника</div>
+                <div class="actions">
+                    <button>Редактировать</button>
+                    <button>Открепить</button>
+                    <button>Удалить</button>
+                </div>
+            </div>
+            <div class="pinned-post">
+                <div class="post-title">что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще что-то еще</div>
+                <div class="actions">
+                    <button>Редактировать</button>
+                    <button>Открепить</button>
+                    <button>Удалить</button>
+                </div>
+                </div>
+                <div class="pinned-post">
+                <div class="post-title">Подрезать провод у светильника</div>
+                <div class="actions">
+                    <button>Редактировать</button>
+                    <button>Открепить</button>
+                    <button>Удалить</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+
