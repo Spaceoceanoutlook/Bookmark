@@ -1,34 +1,41 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
-from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy import Integer, String, Boolean, ForeignKey, DateTime
+from sqlalchemy.orm import relationship, declarative_base, Mapped, mapped_column
 from sqlalchemy.sql import func
-from typing import Optional
+from typing import Optional, List
 
 Base = declarative_base()
 
+
 class User(Base):
     __tablename__ = 'users'
-    id: int = Column(Integer, primary_key=True, index=True)
-    email: str = Column(String, unique=True, index=True, nullable=False)
-    password: str = Column(String, nullable=False)
 
-    topics: list['Topic'] = relationship("Topic", back_populates="user", cascade="all, delete-orphan")
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    email: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    password: Mapped[str] = mapped_column(String, nullable=False)
+
+    topics: Mapped[List['Topic']] = relationship("Topic", back_populates="user", cascade="all, delete-orphan")
+
 
 class Topic(Base):
     __tablename__ = 'topics'
-    id: int = Column(Integer, primary_key=True, index=True)
-    name: str = Column(String, index=True, nullable=False)
-    user_id: int = Column(Integer, ForeignKey('users.id'), nullable=False)
 
-    user: User = relationship("User", back_populates="topics")
-    posts: list['Post'] = relationship("Post", back_populates="topic", cascade="all, delete-orphan")
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String, index=True, nullable=False)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'), nullable=False)
+
+    user: Mapped[User] = relationship("User", back_populates="topics")
+    posts: Mapped[List['Post']] = relationship("Post", back_populates="topic", cascade="all, delete-orphan")
+
 
 class Post(Base):
     __tablename__ = 'posts'
-    id: int = Column(Integer, primary_key=True, index=True)
-    topic_id: int = Column(Integer, ForeignKey('topics.id'), nullable=False)
-    text: str = Column(String, nullable=False)
-    photo: Optional[str] = Column(String, nullable=True)
-    created_at: DateTime = Column(DateTime(timezone=True), server_default=func.now())
-    pinned: bool = Column(Boolean, default=False)
 
-    topic: Topic = relationship("Topic", back_populates="posts")
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    topic_id: Mapped[int] = mapped_column(Integer, ForeignKey('topics.id'), nullable=False)
+    text: Mapped[str] = mapped_column(String, nullable=False)
+    photo: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    pinned: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    topic: Mapped[Topic] = relationship("Topic", back_populates="posts")
+
