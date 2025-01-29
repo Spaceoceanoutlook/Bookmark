@@ -42,9 +42,38 @@ def save_topic():
 def theme(topic_id):
     session = Session()
     topic = session.query(Topic).filter_by(id=topic_id, user_id=current_user.id).first()
-    posts = session.query(Post).filter_by(topic_id=topic_id).all()
+    posts = session.query(Post).filter_by(topic_id=topic_id).all()  # Получаем все записи для данной темы
     session.close()
-    return render_template('theme.html', topic=topic, posts=posts)
+    return render_template('theme.html', topic=topic, posts=posts)  # Передаем записи в шаблон
+
+
+@app.route('/save_post', methods=['POST'])
+@login_required
+def save_post():
+    post_content = request.form.get('postContent')
+    topic_id = request.form.get('topicId')
+    post_photo = request.files.get('postPhoto')  # Получаем файл
+
+    if post_content:
+        session = Session()
+        new_post = Post(text=post_content, topic_id=topic_id)
+
+        # Если есть изображение, сохраняем его
+        if post_photo:
+            # Здесь вы можете сохранить файл на сервере
+            # Например, сохранить в папку uploads
+            post_photo.save(f'uploads/{post_photo.filename}')
+            new_post.photo = post_photo.filename  # Сохраняем имя файла в базе данных
+
+        session.add(new_post)
+        session.commit()
+        session.refresh(new_post)
+        session.close()
+
+        return jsonify({"success": True, "postId": new_post.id, "postContent": post_content})
+    else:
+        return jsonify({"success": False, "message": "Post content is required"})
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

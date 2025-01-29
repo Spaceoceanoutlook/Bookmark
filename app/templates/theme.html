@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Название темы</title>
+    <title>{{ topic.name }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="stylesheet" href="/static/css/theme.css">
@@ -17,9 +17,9 @@
         </nav>
     </header>
     <main>
-        <div class="theme-title">Фильмы</div>
+        <div class="theme-title">{{ topic.name }}</div>
         <button class="add-post-button" id="addPostButton">Добавить новую запись</button>
-        <div class="add-post-form" id="addPostForm">
+        <div class="add-post-form" id="addPostForm" style="display: none;">
             <input type="text" id="postContent" placeholder="Введите запись">
             <div class="file-upload-wrapper">
                 <span class="upload-icon">📁</span>
@@ -29,70 +29,78 @@
             <button id="savePostButton">Сохранить</button>
         </div>
         <div class="posts" id="posts">
+            {% for post in posts %}
             <div class="post">
-                <div class="post-title">https://www.kinopoisk.ru/film/1115471/</div>
+                <div class="post-title">{{ post.text }}</div>
                 <div class="actions">
                     <button>Редактировать</button>
                     <button>Закрепить</button>
                     <button>Удалить</button>
                 </div>
+                {% if post.photo %}
+                <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image">
+                {% endif %}
             </div>
-            <div class="post">
-                <div class="post-title">https://www.kinopoisk.ru/film/1115471/?utm_referrer=yandex.ruаааааааааацвцвцвцвцвцвцвцвцвцвцвцвцвцвц</div>
-                <div class="actions">
-                    <button>Редактировать</button>
-                    <button>Закрепить</button>
-                    <button>Удалить</button>
-                </div>
-            </div>
-            <div class="post">
-                <div class="post-title">Рейтинг 2024 сериалы</div>
-                <div class="actions">
-                    <button>Редактировать</button>
-                    <button>Закрепить</button>
-                    <button>Удалить</button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </main>
     <script>
+        // Показать форму для добавления новой записи
         document.getElementById('addPostButton').addEventListener('click', function() {
             document.getElementById('addPostForm').style.display = 'block';
         });
 
+        // Сохранить новую запись
         document.getElementById('savePostButton').addEventListener('click', function() {
             const postContent = document.getElementById('postContent').value;
             const postPhoto = document.getElementById('postPhoto').files[0];
+            const topicId = {{ topic.id }};  // Получаем ID темы из шаблона
 
             if (postContent) {
-                const postDiv = document.createElement('div');
-                postDiv.className = 'post';
-                postDiv.innerHTML = `
-                    <div class="post-title">${postContent}</div>
-                    <div class="actions">
-                        <button>Редактировать</button>
-                        <button>Закрепить</button>
-                        <button>Удалить</button>
-                    </div>
-                `;
-
+                const formData = new FormData();
+                formData.append('postContent', postContent);
+                formData.append('topicId', topicId);
                 if (postPhoto) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        const img = document.createElement('img');
-                        img.src = event.target.result;
-                        postDiv.insertBefore(img, postDiv.querySelector('.actions'));
-                    };
-                    reader.readAsDataURL(postPhoto);
+                    formData.append('postPhoto', postPhoto);
                 }
 
-                document.getElementById('posts').appendChild(postDiv);
-                document.getElementById('addPostForm').style.display = 'none';
-                document.getElementById('postContent').value = '';
-                document.getElementById('postPhoto').value = '';
+                fetch('/save_post', {
+                    method: 'POST',
+                    body: formData // Используем formData вместо JSON
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const postDiv = document.createElement('div');
+                        postDiv.className = 'post';
+                        postDiv.innerHTML = `
+                            <div class="post-title">${data.postContent}</div>
+                            <div class="actions">
+                                <button>Редактировать</button>
+                                <button>Закрепить</button>
+                                <button>Удалить</button>
+                            </div>
+                        `;
+
+                        if (postPhoto) {
+                            const img = document.createElement('img');
+                            img.src = URL.createObjectURL(postPhoto);
+                            postDiv.insertBefore(img, postDiv.querySelector('.actions'));
+                        }
+
+                        document.getElementById('posts').appendChild(postDiv);
+                        document.getElementById('addPostForm').style.display = 'none';
+                        document.getElementById('postContent').value = '';
+                        document.getElementById('postPhoto').value = '';
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             }
         });
     </script>
 </body>
 </html>
-
