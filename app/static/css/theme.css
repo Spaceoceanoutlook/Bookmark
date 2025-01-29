@@ -1,0 +1,213 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+.theme-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #000;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+.add-post-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 300px;
+    font-family: 'Montserrat', sans-serif;
+}
+.add-post-button:hover {
+    background-color: #0056b3;
+}
+.posts {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 20px;
+}
+.post {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    position: relative;
+    word-wrap: break-word;
+}
+.post-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+.post img {
+    display: block;
+    margin: 0 auto 10px;
+    max-width: 100%;
+    border-radius: 5px;
+}
+.add-post-form {
+    display: none;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+.add-post-form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.add-post-form button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+.add-post-form button:hover {
+    background-color: #0056b3;
+}
+.file-upload-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+    border: 2px dashed #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-sizing: border-box;
+}
+.file-upload-wrapper:hover {
+    background-color: #f1f1f1;
+}
+.file-upload-wrapper input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.file-upload-wrapper .upload-icon {
+    font-size: 32px;
+    color: #007BFF;
+    margin-bottom: 10px;
+}
+.file-upload-wrapper .upload-text {
+    font-size: 16px;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+    .theme-title {
+        font-size: 24px;
+    }
+    .add-post-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    .posts {
+        padding: 15px;
+    }
+    .post {
+        padding: 10px;
+    }
+    .post-title {
+        font-size: 20px;
+    }
+    .add-post-form {
+        padding: 15px;
+    }
+    .add-post-form input[type="text"] {
+        padding: 8px;
+        font-size: 14px;
+    }
+    .add-post-form button {
+        padding: 8px;
+        font-size: 14px;
+    }
+    .file-upload-wrapper {
+        padding: 15px;
+    }
+    .file-upload-wrapper .upload-icon {
+        font-size: 24px;
+    }
+    .file-upload-wrapper .upload-text {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .theme-title {
+        font-size: 20px;
+    }
+    .add-post-button {
+        width: 100%;
+    }
+    .posts {
+        padding: 10px;
+    }
+    .post {
+        padding: 8px;
+    }
+    .post-title {
+        font-size: 18px;
+    }
+    .add-post-form {
+        padding: 10px;
+    }
+    .add-post-form input[type="text"] {
+        padding: 6px;
+        font-size: 12px;
+    }
+    .add-post-form button {
+        padding: 6px;
+        font-size: 12px;
+    }
+    .file-upload-wrapper {
+        padding: 10px;
+    }
+    .file-upload-wrapper .upload-icon {
+        font-size: 18px;
+    }
+    .file-upload-wrapper .upload-text {
+        font-size: 12px;
+    }
+}
