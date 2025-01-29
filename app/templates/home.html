@@ -12,7 +12,7 @@
     <header>
         <div class="logo">Bookmark</div>
         <nav>
-            spaceocean@mail.ru
+            {{ current_user.email }}
             <a href="/logout">Выход</a>
         </nav>
     </header>
@@ -20,34 +20,21 @@
         <div class="sidebar">
             <button id="addTopicButton">Добавить новую тему</button>
             <div class="add-topic-form" id="addTopicForm">
-                <input type="text" id="topicContent" placeholder="Введите название темы">
-                <button id="saveTopicButton">Сохранить</button>
-            </div>
+            <input type="text" id="topicContent" placeholder="Введите название темы">
+            <button id="saveTopicButton">Сохранить</button>
+        </div>
             <div class="topics">
+                {% for topic in topics %}
                 <div class="topic">
                     <div class="topic-title">
-                    <a href="#">Фильмы</a></div>
+                        <a href="{{ url_for('theme', topic_id=topic.id) }}">{{ topic.name }}</a>
+                    </div>
                     <div class="actions">
                         <button>Редактировать</button>
                         <button>Удалить</button>
                     </div>
                 </div>
-                <div class="topic">
-                    <div class="topic-title">
-                    <a href="#">Купить для дома</a></div>
-                    <div class="actions">
-                        <button>Редактировать</button>
-                        <button>Удалить</button>
-                    </div>
-                </div>
-                <div class="topic">
-                    <div class="topic-title">
-                    <a href="#">Насущные дела</a></div>
-                    <div class="actions">
-                        <button>Редактировать</button>
-                        <button>Удалить</button>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="pinned">
@@ -79,32 +66,51 @@
             </div>
         </div>
     </main>
-    <script>
-        document.getElementById('addTopicButton').addEventListener('click', function() {
-            document.getElementById('addTopicForm').style.display = 'block';
-        });
+<script>
+    document.getElementById('addTopicButton').addEventListener('click', function() {
+        document.getElementById('addTopicForm').style.display = 'block';
+    });
 
-        document.getElementById('saveTopicButton').addEventListener('click', function() {
-            const topicContent = document.getElementById('topicContent').value;
+    document.getElementById('saveTopicButton').addEventListener('click', function() {
+        const topicContent = document.getElementById('topicContent').value;
 
-            if (topicContent) {
-                const topicDiv = document.createElement('div');
-                topicDiv.className = 'topic';
-                topicDiv.innerHTML = `
-                    <div class="topic-title">
-                        <a href="#">${topicContent}</a>
-                    </div>
-                    <div class="actions">
-                        <button>Редактировать</button>
-                        <button>Удалить</button>
-                    </div>
-                `;
+        if (topicContent) {
+            fetch('/save_topic', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ topicName: topicContent })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const topicDiv = document.createElement('div');
+                    topicDiv.className = 'topic';
+                    topicDiv.innerHTML = `
+                        <div class="topic-title">
+                            <a href="/theme/${data.topicId}">${data.topicName}</a>
+                        </div>
+                        <div class="actions">
+                            <button>Редактировать</button>
+                            <button>Удалить</button>
+                        </div>
+                    `;
 
-                document.querySelector('.topics').appendChild(topicDiv);
-                document.getElementById('addTopicForm').style.display = 'none';
-                document.getElementById('topicContent').value = '';
-            }
-        });
-    </script>
+                    document.querySelector('.topics').appendChild(topicDiv);
+                    document.getElementById('addTopicForm').style.display = 'none';
+                    document.getElementById('topicContent').value = '';
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    });
+</script>
+
+
 </body>
 </html>
