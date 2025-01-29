@@ -1,8 +1,12 @@
+import os
+
 from flask import redirect, url_for, render_template, request, current_app as app, jsonify
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import Session
 from .models import User, Topic, Post
+from werkzeug.utils import secure_filename
+
 
 
 @app.route('/')
@@ -46,10 +50,6 @@ def theme(topic_id):
     session.close()
     return render_template('theme.html', topic=topic, posts=posts)  # Передаем записи в шаблон
 
-
-from flask import request, jsonify
-from werkzeug.utils import secure_filename
-import os
 
 @app.route('/save_post', methods=['POST'])
 @login_required
@@ -98,9 +98,14 @@ def register():
         session = Session()
         session.add(new_user)
         session.commit()
+
+        # Обновляем объект, чтобы он не был "отключён" от сессии
+        session.refresh(new_user)
+
+        login_user(new_user)  # Теперь объект можно передавать в Flask-Login
         session.close()
 
-        return render_template('home.html')
+        return redirect(url_for('home'))
     return render_template('register.html')
 
 

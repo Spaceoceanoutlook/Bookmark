@@ -1,5 +1,5 @@
 from sqlalchemy import Integer, String, Boolean, ForeignKey, DateTime
-from sqlalchemy.orm import relationship, declarative_base, Mapped, mapped_column
+from sqlalchemy.orm import relationship, declarative_base, Mapped, mapped_column, validates
 from sqlalchemy.sql import func
 from typing import Optional, List
 from flask_login import UserMixin
@@ -38,6 +38,11 @@ class Topic(Base):
     user: Mapped[User] = relationship("User", back_populates="topics")
     posts: Mapped[List['Post']] = relationship("Post", back_populates="topic", cascade="all, delete-orphan")
 
+    @validates('name')
+    def validate_name(self, key, value):
+        if len(value) > 22:
+            raise ValueError("Name cannot be longer than 100 characters")
+        return value
 
 class Post(Base):
     __tablename__ = 'posts'
