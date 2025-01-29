@@ -14,10 +14,10 @@
             color: #333;
         }
         a {
-            text-decoration: none; 
+            text-decoration: none;
             color: black;
         }
-        
+
         header {
             background-color: #007BFF;
             color: white;
@@ -81,13 +81,13 @@
             position: relative;
             text-align: center;
         }
-        .topic-title, .post-title { 
+        .topic-title, .post-title {
             font-size: 32px;
             font-weight: bold;
             margin-bottom: 10px;
             font-family: 'Montserrat', sans-serif;
         }
-        
+
         .actions {
             display: flex;
             gap: 10px;
@@ -127,6 +127,40 @@
         .pinned-post .post-title {
             font-size: 24px;
             font-family: 'Montserrat', sans-serif;
+        }
+
+        .add-topic-form {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+        .add-topic-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .add-topic-form button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px; /* Изменен размер шрифта */
+        }
+        .add-topic-form button:hover {
+            background-color: #0056b3;
         }
 
         /* Media Queries for Mobile Devices */
@@ -202,7 +236,11 @@
     </header>
     <main>
         <div class="sidebar">
-            <button>Добавить новую тему</button>
+            <button id="addTopicButton">Добавить новую тему</button>
+            <div class="add-topic-form" id="addTopicForm">
+                <input type="text" id="topicContent" placeholder="Введите название темы">
+                <button id="saveTopicButton">Сохранить</button>
+            </div>
             <div class="topics">
                 <div class="topic">
                     <div class="topic-title">
@@ -259,6 +297,32 @@
             </div>
         </div>
     </main>
+    <script>
+        document.getElementById('addTopicButton').addEventListener('click', function() {
+            document.getElementById('addTopicForm').style.display = 'block';
+        });
+
+        document.getElementById('saveTopicButton').addEventListener('click', function() {
+            const topicContent = document.getElementById('topicContent').value;
+
+            if (topicContent) {
+                const topicDiv = document.createElement('div');
+                topicDiv.className = 'topic';
+                topicDiv.innerHTML = `
+                    <div class="topic-title">
+                        <a href="#">${topicContent}</a>
+                    </div>
+                    <div class="actions">
+                        <button>Редактировать</button>
+                        <button>Удалить</button>
+                    </div>
+                `;
+
+                document.querySelector('.topics').appendChild(topicDiv);
+                document.getElementById('addTopicForm').style.display = 'none';
+                document.getElementById('topicContent').value = '';
+            }
+        });
+    </script>
 </body>
 </html>
-
