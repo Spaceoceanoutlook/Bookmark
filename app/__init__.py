@@ -1,24 +1,27 @@
 from flask import Flask
 from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
-from app.models import User
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from config import Config
+from .models import Base, User
 
-db = SQLAlchemy()
+app = Flask(__name__)
+app.config.from_object(Config)
+
+engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+Session = sessionmaker(bind=engine)
+
 login_manager = LoginManager()
 
 def create_app():
-    app = Flask(__name__)
-    app.config.from_object(Config)
-
-    db.init_app(app)
     login_manager.init_app(app)
-
-    with app.app_context():
-        from . import routes
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        session = Session()
+        return session.query(User).get(int(user_id))
+
+    with app.app_context():
+        from . import routes
 
     return app

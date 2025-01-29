@@ -2,11 +2,12 @@ from sqlalchemy import Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship, declarative_base, Mapped, mapped_column
 from sqlalchemy.sql import func
 from typing import Optional, List
+from flask_login import UserMixin
 
 Base = declarative_base()
 
 
-class User(Base):
+class User(Base, UserMixin):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
@@ -15,6 +16,17 @@ class User(Base):
 
     topics: Mapped[List['Topic']] = relationship("Topic", back_populates="user", cascade="all, delete-orphan")
 
+    def is_active(self):
+        return True
+
+    def get_id(self):
+        return str(self.id)
+
+    def is_authenticated(self):
+        return True
+
+    def is_anonymous(self):
+        return False
 
 class Topic(Base):
     __tablename__ = 'topics'
