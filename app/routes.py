@@ -47,6 +47,10 @@ def theme(topic_id):
     return render_template('theme.html', topic=topic, posts=posts)  # Передаем записи в шаблон
 
 
+from flask import request, jsonify
+from werkzeug.utils import secure_filename
+import os
+
 @app.route('/save_post', methods=['POST'])
 @login_required
 def save_post():
@@ -60,17 +64,25 @@ def save_post():
 
         # Если есть изображение, сохраняем его
         if post_photo:
-            # Здесь вы можете сохранить файл на сервере
-            # Например, сохранить в папку uploads
-            post_photo.save(f'uploads/{post_photo.filename}')
-            new_post.photo = post_photo.filename  # Сохраняем имя файла в базе данных
+            upload_folder = app.config['UPLOAD_FOLDER']
+            if not os.path.exists(upload_folder):
+                os.makedirs(upload_folder)
 
-        session.add(new_post)
-        session.commit()
-        session.refresh(new_post)
-        session.close()
+            # Сохранение файла с безопасным именем
+            filename = secure_filename(post_photo.filename)
+            post_photo.save(os.path.join(upload_folder, filename))
+            new_post.photo = filename  # Сохраняем имя файла в базе данных
 
-        return jsonify({"success": True, "postId": new_post.id, "postContent": post_content})
+        try:
+            session.add(new_post)
+            session.commit()
+            session.refresh(new_post)
+            return jsonify({"success": True, "postId": new_post.id, "postContent": post_content, "photoFilename": new_post.photo})
+        except Exception as e:
+            session.rollback()  # Откат транзакции в случае ошибки
+            return jsonify({"success": False, "message": "Database error: " + str(e)})
+        finally:
+            session.close()
     else:
         return jsonify({"success": False, "message": "Post content is required"})
 

@@ -47,7 +47,7 @@
     <script>
         // Показать форму для добавления новой записи
         document.getElementById('addPostButton').addEventListener('click', function() {
-            document.getElementById('addPostForm').style.display = 'block';
+        document.getElementById('addPostForm').style.display = 'block';
         });
 
         // Сохранить новую запись
@@ -82,9 +82,10 @@
                             </div>
                         `;
 
-                        if (postPhoto) {
+                        // Используем имя файла, возвращаемое сервером
+                        if (data.photoFilename) {
                             const img = document.createElement('img');
-                            img.src = URL.createObjectURL(postPhoto);
+                            img.src = `/static/uploads/${data.photoFilename}`; // Генерируем URL для изображения
                             postDiv.insertBefore(img, postDiv.querySelector('.actions'));
                         }
 

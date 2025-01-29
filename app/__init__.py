@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_login import LoginManager
 from sqlalchemy import create_engine
@@ -7,6 +9,10 @@ from .models import Base, User
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+# Папка для загрузки файлов
+app.config['UPLOAD_FOLDER'] = os.path.join('app', 'static', 'uploads')
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # Максимальный размер файла 5 МБ
 
 engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)
