@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: a3148e0ed884
+Revision ID: 0cb3c2d7fd4a
 Revises: 
-Create Date: 2025-01-29 18:30:34.671282
+Create Date: 2025-01-30 11:15:36.699392
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'a3148e0ed884'
+revision: str = '0cb3c2d7fd4a'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -39,12 +39,14 @@ def upgrade() -> None:
     op.create_index(op.f('ix_topics_name'), 'topics', ['name'], unique=True)
     op.create_table('posts',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('topic_id', sa.Integer(), nullable=False),
     sa.Column('text', sa.String(), nullable=False),
     sa.Column('photo', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.Column('pinned', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['topic_id'], ['topics.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_posts_id'), 'posts', ['id'], unique=False)

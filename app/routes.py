@@ -8,19 +8,19 @@ from .models import User, Topic, Post
 from werkzeug.utils import secure_filename
 
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/home')
 @login_required
 def home():
     session = Session()
     topics = session.query(Topic).filter_by(user_id=current_user.id).all()
+    pinned_posts = session.query(Post).filter_by(pinned=True, user_id=current_user.id).all()
     session.close()
-    return render_template('home.html', topics=topics)
+    return render_template('home.html', topics=topics, pinned_posts=pinned_posts)
+
 
 @app.route('/save_topic', methods=['POST'])
 @login_required
@@ -104,7 +104,7 @@ def save_post():
 
     if post_content:
         session = Session()
-        new_post = Post(text=post_content, topic_id=topic_id)
+        new_post = Post(text=post_content, topic_id=topic_id, user_id=current_user.id)
 
         # Если есть изображение, сохраняем его
         if post_photo:
