@@ -1,5 +1,6 @@
 venv-bookmark
 .idea
 __pycache__
+uploads
 *.db
 
