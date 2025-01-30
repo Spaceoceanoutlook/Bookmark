@@ -34,7 +34,7 @@
                 <div class="post-title">{{ post.text }}</div>
                 <div class="actions">
                     <button>Редактировать</button>
-                    <button>Закрепить</button>
+                    <button class="pinPostButton">Закрепить</button>
                     <button class="deletePostButton">Удалить</button>
                 </div>
                 {% if post.photo %}
@@ -78,7 +78,7 @@
                             <div class="post-title">${data.postContent}</div>
                             <div class="actions">
                                 <button>Редактировать</button>
-                                <button>Закрепить</button>
+                                <button class="pinPostButton">Закрепить</button>
                                 <button class="deletePostButton">Удалить</button>
                             </div>
                         `;
@@ -130,6 +130,33 @@
                         console.error('Error:', error);
                     });
                 }
+            }
+        });
+
+        // Закрепить запись
+        document.addEventListener('click', function(event) {
+            if (event.target && event.target.classList.contains('pinPostButton')) {
+                const postId = event.target.closest('.post').getAttribute('data-post-id');
+
+                fetch('/pin_post', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ postId: postId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Запись успешно закреплена!');
+                        // Здесь можно добавить код для обновления списка записей на странице
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             }
         });
     </script>

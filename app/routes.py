@@ -198,3 +198,24 @@ def delete_post():
             return jsonify({"success": False, "message": "Post not found"})
     else:
         return jsonify({"success": False, "message": "Post ID is required"})
+
+@app.route('/pin_post', methods=['POST'])
+@login_required
+def pin_post():
+    data = request.json
+    post_id = data.get('postId')
+
+    if post_id:
+        session = Session()
+        post = session.query(Post).filter_by(id=post_id, user_id=current_user.id).first()
+
+        if post:
+            post.pinned = True
+            session.commit()
+            session.close()
+            return jsonify({"success": True})
+        else:
+            session.close()
+            return jsonify({"success": False, "message": "Post not found"})
+    else:
+        return jsonify({"success": False, "message": "Post ID is required"})
