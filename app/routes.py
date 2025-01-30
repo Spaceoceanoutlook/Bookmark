@@ -12,6 +12,54 @@ from werkzeug.utils import secure_filename
 def index():
     return render_template('index.html')
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+        new_user = User(email=email, password=hashed_password)
+
+        session = Session()
+        session.add(new_user)
+        session.commit()
+
+        # Обновляем объект, чтобы он не был "отключён" от сессии
+        session.refresh(new_user)
+
+        login_user(new_user)  # Теперь объект можно передавать в Flask-Login
+        session.close()
+
+        return redirect(url_for('home'))
+    return render_template('register.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        session = Session()
+        user = session.query(User).filter_by(email=email).first()
+
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            session.close()
+            return redirect(url_for('home'))
+        else:
+            session.close()
+
+    return render_template('login.html')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+
 @app.route('/home')
 @login_required
 def home():
@@ -130,50 +178,23 @@ def save_post():
     else:
         return jsonify({"success": False, "message": "Post content is required"})
 
+@app.route('/delete_post', methods=['POST'])
+@login_required
+def delete_post():
+    data = request.json
+    post_id = data.get('postId')
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
-        new_user = User(email=email, password=hashed_password)
-
+    if post_id:
         session = Session()
-        session.add(new_user)
-        session.commit()
+        post = session.query(Post).filter_by(id=post_id, user_id=current_user.id).first()
 
-        # Обновляем объект, чтобы он не был "отключён" от сессии
-        session.refresh(new_user)
-
-        login_user(new_user)  # Теперь объект можно передавать в Flask-Login
-        session.close()
-
-        return redirect(url_for('home'))
-    return render_template('register.html')
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
-        session = Session()
-        user = session.query(User).filter_by(email=email).first()
-
-        if user and check_password_hash(user.password, password):
-            login_user(user)
+        if post:
+            session.delete(post)
+            session.commit()
             session.close()
-            return redirect(url_for('home'))
+            return jsonify({"success": True})
         else:
             session.close()
-
-    return render_template('login.html')
-
-
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
+            return jsonify({"success": False, "message": "Post not found"})
+    else:
+        return jsonify({"success": False, "message": "Post ID is required"})

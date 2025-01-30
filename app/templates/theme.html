@@ -30,12 +30,12 @@
         </div>
         <div class="posts" id="posts">
             {% for post in posts %}
-            <div class="post">
+            <div class="post" data-post-id="{{ post.id }}">
                 <div class="post-title">{{ post.text }}</div>
                 <div class="actions">
                     <button>Редактировать</button>
                     <button>Закрепить</button>
-                    <button>Удалить</button>
+                    <button class="deletePostButton">Удалить</button>
                 </div>
                 {% if post.photo %}
                 <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image">
@@ -73,12 +73,13 @@
                     if (data.success) {
                         const postDiv = document.createElement('div');
                         postDiv.className = 'post';
+                        postDiv.setAttribute('data-post-id', data.postId);
                         postDiv.innerHTML = `
                             <div class="post-title">${data.postContent}</div>
                             <div class="actions">
                                 <button>Редактировать</button>
                                 <button>Закрепить</button>
-                                <button>Удалить</button>
+                                <button class="deletePostButton">Удалить</button>
                             </div>
                         `;
 
@@ -100,6 +101,35 @@
                 .catch(error => {
                     console.error('Error:', error);
                 });
+            }
+        });
+
+        // Удалить запись
+        document.addEventListener('click', function(event) {
+            if (event.target && event.target.classList.contains('deletePostButton')) {
+                const postId = event.target.closest('.post').getAttribute('data-post-id');
+
+                if (confirm('Вы уверены, что хотите удалить эту запись?')) {
+                    fetch('/delete_post', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ postId: postId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const postDiv = event.target.closest('.post');
+                            postDiv.remove();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
             }
         });
     </script>
