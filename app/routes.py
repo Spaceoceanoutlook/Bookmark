@@ -41,6 +41,30 @@ def save_topic():
         return jsonify({"success": False, "message": "Topic name is required"})
 
 
+@app.route('/edit_topic', methods=['POST'])
+@login_required
+def edit_topic():
+    data = request.json
+    topic_id = data.get('topicId')
+    topic_name = data.get('topicName')
+
+    if topic_id and topic_name:
+        session = Session()
+        topic = session.query(Topic).filter_by(id=topic_id, user_id=current_user.id).first()
+
+        if topic:
+            topic.name = topic_name
+            session.commit()
+            session.close()
+            return jsonify({"success": True, "topicName": topic_name})
+        else:
+            session.close()
+            return jsonify({"success": False, "message": "Topic not found"})
+    else:
+        return jsonify({"success": False, "message": "Topic ID and name are required"})
+
+
+
 @app.route('/theme/<int:topic_id>')
 @login_required
 def theme(topic_id):
