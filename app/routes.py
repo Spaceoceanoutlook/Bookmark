@@ -63,6 +63,26 @@ def edit_topic():
     else:
         return jsonify({"success": False, "message": "Topic ID and name are required"})
 
+@app.route('/delete_topic', methods=['POST'])
+@login_required
+def delete_topic():
+    data = request.json
+    topic_id = data.get('topicId')
+
+    if topic_id:
+        session = Session()
+        topic = session.query(Topic).filter_by(id=topic_id, user_id=current_user.id).first()
+
+        if topic:
+            session.delete(topic)
+            session.commit()
+            session.close()
+            return jsonify({"success": True})
+        else:
+            session.close()
+            return jsonify({"success": False, "message": "Topic not found"})
+    else:
+        return jsonify({"success": False, "message": "Topic ID is required"})
 
 
 @app.route('/theme/<int:topic_id>')

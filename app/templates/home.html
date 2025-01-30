@@ -31,7 +31,7 @@
                     </div>
                     <div class="actions">
                         <button class="editTopicButton" data-topic-id="{{ topic.id }}" data-topic-name="{{ topic.name }}">Редактировать</button>
-                        <button>Удалить</button>
+                        <button class="deleteTopicButton" data-topic-id="{{ topic.id }}">Удалить</button>
                     </div>
                     <div class="add-topic-form edit-topic-form" style="display: none;">
                         <input type="text" class="editTopicContent" placeholder="Введите новое название темы">
@@ -96,7 +96,7 @@
                             </div>
                             <div class="actions">
                                 <button class="editTopicButton" data-topic-id="${data.topicId}" data-topic-name="${data.topicName}">Редактировать</button>
-                                <button>Удалить</button>
+                                <button class="deleteTopicButton" data-topic-id="${data.topicId}">Удалить</button>
                             </div>
                             <div class="add-topic-form edit-topic-form" style="display: none;">
                                 <input type="text" class="editTopicContent" placeholder="Введите новое название темы">
@@ -150,6 +150,32 @@
                         });
                     }
                 });
+            }
+
+            if (event.target && event.target.classList.contains('deleteTopicButton')) {
+                const topicId = event.target.getAttribute('data-topic-id');
+
+                if (confirm('Вы уверены, что хотите удалить эту тему?')) {
+                    fetch('/delete_topic', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ topicId: topicId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const topicDiv = event.target.closest('.topic');
+                            topicDiv.remove();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
             }
         });
     </script>
