@@ -15,7 +15,7 @@ class Config:
     PERMANENT_SESSION_LIFETIME = timedelta(days=7)  # Сессия будет активна 7 дней
 
     # Настройки для загрузки файлов
-    UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static', 'uploads')
+    UPLOAD_FOLDER = os.path.join('app', 'static', 'uploads')
     MAX_CONTENT_LENGTH = 5 * 1024 * 1024  # 5 МБ
 
     # Создаём папку для хранения файлов сессий, если её нет
