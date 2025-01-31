@@ -2,6 +2,7 @@ import os
 
 from flask import redirect, url_for, render_template, request, current_app as app, jsonify
 from flask_login import login_required, login_user, logout_user, current_user
+from sqlalchemy import desc
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import Session
 from .models import User, Topic, Post
@@ -64,8 +65,9 @@ def logout():
 @login_required
 def home():
     session = Session()
-    topics = session.query(Topic).filter_by(user_id=current_user.id).all()
-    pinned_posts = session.query(Post).filter_by(pinned=True, user_id=current_user.id).all()
+    topics = session.query(Topic).filter_by(user_id=current_user.id).order_by(desc(Topic.id)).all()
+    pinned_posts = (session.query(Post)
+                    .filter_by(pinned=True, user_id=current_user.id).order_by(desc(Post.id)).all())
     session.close()
     return render_template('home.html', topics=topics, pinned_posts=pinned_posts)
 
