@@ -180,6 +180,7 @@ def save_post():
     else:
         return jsonify({"success": False, "message": "Post content is required"})
 
+
 @app.route('/delete_post', methods=['POST'])
 @login_required
 def delete_post():
@@ -191,6 +192,12 @@ def delete_post():
         post = session.query(Post).filter_by(id=post_id, user_id=current_user.id).first()
 
         if post:
+            # Удаление файла изображения, если он существует
+            if post.photo:
+                photo_path = os.path.join(app.config['UPLOAD_FOLDER'], post.photo)
+                if os.path.exists(photo_path):
+                    os.remove(photo_path)
+
             session.delete(post)
             session.commit()
             session.close()
@@ -200,6 +207,7 @@ def delete_post():
             return jsonify({"success": False, "message": "Post not found"})
     else:
         return jsonify({"success": False, "message": "Post ID is required"})
+
 
 @app.route('/pin_post', methods=['POST'])
 @login_required

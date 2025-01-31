@@ -33,7 +33,7 @@ class Topic(Base):
     __tablename__ = 'topics'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    name: Mapped[str] = mapped_column(String(length=22), unique=True, index=True, nullable=False)
+    name: Mapped[str] = mapped_column(String(length=33), unique=True, index=True, nullable=False)
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'), nullable=False)
 
     user: Mapped[User] = relationship("User", back_populates="topics")

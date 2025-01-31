@@ -14,6 +14,13 @@ app.config.from_object(Config)
 app.config['UPLOAD_FOLDER'] = os.path.join('app', 'static', 'uploads')
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # Максимальный размер файла 5 МБ
 
+def create_upload_folder():
+    upload_folder = app.config['UPLOAD_FOLDER']
+    if not os.path.exists(upload_folder):
+        os.makedirs(upload_folder)
+
+create_upload_folder()
+
 engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)
 
