@@ -140,9 +140,9 @@ def delete_topic():
 def theme(topic_id):
     session = Session()
     topic = session.query(Topic).filter_by(id=topic_id, user_id=current_user.id).first()
-    posts = session.query(Post).filter_by(topic_id=topic_id).all()  # Получаем все записи для данной темы
+    posts = session.query(Post).filter_by(topic_id=topic_id).order_by(desc(Post.id)).all()
     session.close()
-    return render_template('theme.html', topic=topic, posts=posts)  # Передаем записи в шаблон
+    return render_template('theme.html', topic=topic, posts=posts)
 
 
 @app.route('/save_post', methods=['POST'])

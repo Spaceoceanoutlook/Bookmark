@@ -49,76 +49,107 @@
         </div>
     </main>
     <script>
-    // Показать форму для добавления новой записи
-    document.getElementById('addPostButton').addEventListener('click', function() {
-        document.getElementById('addPostForm').style.display = 'block';
-    });
+        // Показать форму для добавления новой записи
+        document.getElementById('addPostButton').addEventListener('click', function() {
+            document.getElementById('addPostForm').style.display = 'block';
+        });
 
-    // Сохранить новую запись
-    document.getElementById('savePostButton').addEventListener('click', function() {
-        const postContent = document.getElementById('postContent').value;
-        const postPhoto = document.getElementById('postPhoto').files[0];
-        const topicId = {{ topic.id }};  // Получаем ID темы из шаблона
+        // Сохранить новую запись
+        document.getElementById('savePostButton').addEventListener('click', function() {
+            const postContent = document.getElementById('postContent').value;
+            const postPhoto = document.getElementById('postPhoto').files[0];
+            const topicId = {{ topic.id }};  // Получаем ID темы из шаблона
 
-        if (postContent) {
-            const formData = new FormData();
-            formData.append('postContent', postContent);
-            formData.append('topicId', topicId);
-            if (postPhoto) {
-                formData.append('postPhoto', postPhoto);
-            }
-
-            fetch('/save_post', {
-                method: 'POST',
-                body: formData // Используем formData вместо JSON
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const postDiv = document.createElement('div');
-                    postDiv.className = 'post';
-                    postDiv.setAttribute('data-post-id', data.postId);
-                    postDiv.innerHTML = `
-                        <div class="post-title">${data.postContent}</div>
-                        <div class="actions">
-                            <button class="editPostButton" data-post-id="${data.postId}" data-post-name="${data.postContent}">Редактировать</button>
-                            <button class="pinPostButton">Закрепить</button>
-                            <button class="deletePostButton">Удалить</button>
-                        </div>
-                        <div class="add-postform edit-post-form" style="display: none;">
-                            <input type="text" class="editPostContent" placeholder="Введите новое название записи">
-                            <button class="saveeditPostButton">Сохранить</button>
-                        </div>
-                    `;
-
-                    // Используем имя файла, возвращаемое сервером
-                    if (data.photoFilename) {
-                        const img = document.createElement('img');
-                        img.src = `/static/uploads/${data.photoFilename}`; // Генерируем URL для изображения
-                        postDiv.insertBefore(img, postDiv.querySelector('.actions'));
-                    }
-
-                    document.getElementById('posts').appendChild(postDiv);
-                    document.getElementById('addPostForm').style.display = 'none';
-                    document.getElementById('postContent').value = '';
-                    document.getElementById('postPhoto').value = '';
-                } else {
-                    alert(data.message);
+            if (postContent) {
+                const formData = new FormData();
+                formData.append('postContent', postContent);
+                formData.append('topicId', topicId);
+                if (postPhoto) {
+                    formData.append('postPhoto', postPhoto);
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    });
 
-    // Удалить запись
-    document.addEventListener('click', function(event) {
-        if (event.target && event.target.classList.contains('deletePostButton')) {
-            const postId = event.target.closest('.post').getAttribute('data-post-id');
+                fetch('/save_post', {
+                    method: 'POST',
+                    body: formData // Используем formData вместо JSON
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const postDiv = document.createElement('div');
+                        postDiv.className = 'post';
+                        postDiv.setAttribute('data-post-id', data.postId);
+                        postDiv.innerHTML = `
+                            <div class="post-title">${data.postContent}</div>
+                            <div class="actions">
+                                <button class="editPostButton" data-post-id="${data.postId}" data-post-name="${data.postContent}">Редактировать</button>
+                                <button class="pinPostButton">Закрепить</button>
+                                <button class="deletePostButton">Удалить</button>
+                            </div>
+                            <div class="add-postform edit-post-form" style="display: none;">
+                                <input type="text" class="editPostContent" placeholder="Введите новое название записи">
+                                <button class="saveeditPostButton">Сохранить</button>
+                            </div>
+                        `;
 
-            if (confirm('Вы уверены, что хотите удалить эту запись?')) {
-                fetch('/delete_post', {
+                        // Используем имя файла, возвращаемое сервером
+                        if (data.photoFilename) {
+                            const img = document.createElement('img');
+                            img.src = `/static/uploads/${data.photoFilename}`; // Генерируем URL для изображения
+                            postDiv.insertBefore(img, postDiv.querySelector('.actions'));
+                        }
+
+                        // Добавляем новую запись в начало списка
+                        const postsContainer = document.getElementById('posts');
+                        postsContainer.insertBefore(postDiv, postsContainer.firstChild);
+
+                        document.getElementById('addPostForm').style.display = 'none';
+                        document.getElementById('postContent').value = '';
+                        document.getElementById('postPhoto').value = '';
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
+
+        // Удалить запись
+        document.addEventListener('click', function(event) {
+            if (event.target && event.target.classList.contains('deletePostButton')) {
+                const postId = event.target.closest('.post').getAttribute('data-post-id');
+
+                if (confirm('Вы уверены, что хотите удалить эту запись?')) {
+                    fetch('/delete_post', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ postId: postId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const postDiv = event.target.closest('.post');
+                            postDiv.remove();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+            }
+        });
+
+        // Закрепить запись
+        document.addEventListener('click', function(event) {
+            if (event.target && event.target.classList.contains('pinPostButton')) {
+                const postId = event.target.closest('.post').getAttribute('data-post-id');
+
+                fetch('/pin_post', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -128,8 +159,8 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        const postDiv = event.target.closest('.post');
-                        postDiv.remove();
+                        alert('Запись успешно закреплена!');
+                        // Здесь можно добавить код для обновления списка записей на странице
                     } else {
                         alert(data.message);
                     }
@@ -138,73 +169,44 @@
                     console.error('Error:', error);
                 });
             }
-        }
-    });
+        });
 
-    // Закрепить запись
-    document.addEventListener('click', function(event) {
-        if (event.target && event.target.classList.contains('pinPostButton')) {
-            const postId = event.target.closest('.post').getAttribute('data-post-id');
+        // Редактировать запись
+        document.addEventListener('click', function(event) {
+            if (event.target && event.target.classList.contains('editPostButton')) {
+                const postId = event.target.getAttribute('data-post-id');
+                const postName = event.target.getAttribute('data-post-name');
+                const editForm = event.target.parentElement.nextElementSibling;
+                editForm.style.display = 'block';
+                editForm.querySelector('.editPostContent').value = postName;
 
-            fetch('/pin_post', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ postId: postId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Запись успешно закреплена!');
-                    // Здесь можно добавить код для обновления списка записей на странице
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    });
+                editForm.querySelector('.saveeditPostButton').addEventListener('click', function() {
+                    const newPostName = editForm.querySelector('.editPostContent').value;
 
-    // Редактировать запись
-    document.addEventListener('click', function(event) {
-        if (event.target && event.target.classList.contains('editPostButton')) {
-            const postId = event.target.getAttribute('data-post-id');
-            const postName = event.target.getAttribute('data-post-name');
-            const editForm = event.target.parentElement.nextElementSibling;
-            editForm.style.display = 'block';
-            editForm.querySelector('.editPostContent').value = postName;
-
-            editForm.querySelector('.saveeditPostButton').addEventListener('click', function() {
-                const newPostName = editForm.querySelector('.editPostContent').value;
-
-                if (newPostName) {
-                    fetch('/edit_post', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ postId: postId, postName: newPostName })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            event.target.parentElement.previousElementSibling.textContent = newPostName;
-                            editForm.style.display = 'none';
-                        } else {
-                            alert(data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                }
-            });
-        }
-    });
-</script>
-
+                    if (newPostName) {
+                        fetch('/edit_post', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ postId: postId, postName: newPostName })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                event.target.parentElement.previousElementSibling.textContent = newPostName;
+                                editForm.style.display = 'none';
+                            } else {
+                                alert(data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -41,7 +41,7 @@ class Topic(Base):
 
     @validates('name')
     def validate_name(self, key, value):
-        if len(value) > 22:
+        if len(value) > 33:
             raise ValueError("Name cannot be longer than 100 characters")
         return value
 

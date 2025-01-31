@@ -60,6 +60,13 @@ main {
     font-family: 'Montserrat', sans-serif;
 }
 
+.pinned-post img {
+            max-width: 520px; /* Максимальная ширина изображения */
+            max-height: 520px; /* Максимальная высота изображения */
+            object-fit: contain; /* Масштабирование изображения */
+            border-radius: 5px; /* Закругленные углы */
+        }
+
 .add-topic-form, .add-postform {
     display: none;
     background-color: white;
