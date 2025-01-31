@@ -33,9 +33,13 @@
             <div class="post" data-post-id="{{ post.id }}">
                 <div class="post-title">{{ post.text }}</div>
                 <div class="actions">
-                    <button>Редактировать</button>
+                    <button class="editPostButton" data-post-id="{{ post.id }}" data-post-name="{{ post.text }}">Редактировать</button>
                     <button class="pinPostButton">Закрепить</button>
                     <button class="deletePostButton">Удалить</button>
+                </div>
+                <div class="add-postform edit-post-form" style="display: none;">
+                    <input type="text" class="editPostContent" placeholder="Введите новое название записи">
+                    <button class="saveeditPostButton">Сохранить</button>
                 </div>
                 {% if post.photo %}
                 <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image">
@@ -77,9 +81,13 @@
                         postDiv.innerHTML = `
                             <div class="post-title">${data.postContent}</div>
                             <div class="actions">
-                                <button>Редактировать</button>
+                                <button class="editPostButton" data-post-id="${data.postId}" data-post-name="${data.postContent}">Редактировать</button>
                                 <button class="pinPostButton">Закрепить</button>
                                 <button class="deletePostButton">Удалить</button>
+                            </div>
+                            <div class="add-postform edit-post-form" style="display: none;">
+                                <input type="text" class="editPostContent" placeholder="Введите новое название записи">
+                                <button class="saveeditPostButton">Сохранить</button>
                             </div>
                         `;
 
@@ -156,6 +164,43 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                });
+            }
+        });
+
+        // Редактировать запись
+        document.addEventListener('click', function(event) {
+            if (event.target && event.target.classList.contains('editPostButton')) {
+                const postId = event.target.getAttribute('data-post-id');
+                const postName = event.target.getAttribute('data-post-name');
+                const editForm = event.target.parentElement.nextElementSibling;
+                editForm.style.display = 'block';
+                editForm.querySelector('.editPostContent').value = postName;
+
+                editForm.querySelector('.saveeditPostButton').addEventListener('click', function() {
+                    const newPostName = editForm.querySelector('.editPostContent').value;
+
+                    if (newPostName) {
+                        fetch('/edit_post', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ postId: postId, postName: newPostName })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                event.target.parentElement.previousElementSibling.textContent = newPostName;
+                                editForm.style.display = 'none';
+                            } else {
+                                alert(data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
                 });
             }
         });

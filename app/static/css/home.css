@@ -60,7 +60,7 @@ main {
     font-family: 'Montserrat', sans-serif;
 }
 
-.add-topic-form {
+.add-topic-form, .add-postform {
     display: none;
     background-color: white;
     border-radius: 8px;
@@ -71,7 +71,7 @@ main {
     margin-top: 20px;
     box-sizing: border-box;
 }
-.add-topic-form input[type="text"] {
+.add-topic-form input[type="text"], .add-postform input[type="text"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -79,7 +79,7 @@ main {
     border-radius: 5px;
     box-sizing: border-box;
 }
-.add-topic-form button {
+.add-topic-form button, .add-postform button {
     background-color: #007BFF;
     color: white;
     border: none;
@@ -90,7 +90,7 @@ main {
     box-sizing: border-box;
     font-size: 16px;
 }
-.add-topic-form button:hover {
+.add-topic-form button:hover, .add-postform button:hover {
     background-color: #0056b3;
 }
 

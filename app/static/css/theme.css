@@ -61,7 +61,7 @@ main {
     max-width: 100%;
     border-radius: 5px;
 }
-.add-post-form {
+.add-post-form, .add-postform {
     display: none;
     background-color: white;
     border-radius: 8px;
@@ -72,7 +72,7 @@ main {
     margin-top: 20px;
     box-sizing: border-box;
 }
-.add-post-form input[type="text"] {
+.add-post-form input[type="text"], .add-postform input[type="text"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -80,7 +80,7 @@ main {
     border-radius: 5px;
     box-sizing: border-box;
 }
-.add-post-form button {
+.add-post-form button, .add-postform button {
     background-color: #007BFF;
     color: white;
     border: none;
@@ -91,7 +91,7 @@ main {
     box-sizing: border-box;
     font-size: 16px;
 }
-.add-post-form button:hover {
+.add-post-form button:hover, .add-postform button:hover {
     background-color: #0056b3;
 }
 .file-upload-wrapper {
@@ -152,14 +152,14 @@ main {
     .post-title {
         font-size: 20px;
     }
-    .add-post-form {
+    .add-post-form, .add-postform {
         padding: 15px;
     }
-    .add-post-form input[type="text"] {
+    .add-post-form input[type="text"], .add-postform input[type="text"] {
         padding: 8px;
         font-size: 14px;
     }
-    .add-post-form button {
+    .add-post-form button, .add-postform button {
         padding: 8px;
         font-size: 14px;
     }
@@ -190,14 +190,14 @@ main {
     .post-title {
         font-size: 18px;
     }
-    .add-post-form {
+    .add-post-form, .add-postform {
         padding: 10px;
     }
-    .add-post-form input[type="text"] {
+    .add-post-form input[type="text"], .add-postform input[type="text"] {
         padding: 6px;
         font-size: 12px;
     }
-    .add-post-form button {
+    .add-post-form button, .add-postform button {
         padding: 6px;
         font-size: 12px;
     }
