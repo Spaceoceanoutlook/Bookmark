@@ -4,7 +4,7 @@ from flask import redirect, url_for, render_template, request, current_app as ap
 from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy import desc
 from werkzeug.security import generate_password_hash, check_password_hash
-from . import Session
+from . import SessionLocal
 from .models import User, Topic, Post
 from werkzeug.utils import secure_filename
 
@@ -21,7 +21,7 @@ def register():
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
         new_user = User(email=email, password=hashed_password)
 
-        session = Session()
+        session = SessionLocal()
         session.add(new_user)
         session.commit()
 
@@ -41,7 +41,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        session = Session()
+        session = SessionLocal()
         user = session.query(User).filter_by(email=email).first()
 
         if user and check_password_hash(user.password, password):
@@ -64,7 +64,7 @@ def logout():
 @app.route('/home')
 @login_required
 def home():
-    session = Session()
+    session = SessionLocal()
     topics = session.query(Topic).filter_by(user_id=current_user.id).order_by(desc(Topic.id)).all()
     pinned_posts = (session.query(Post)
                     .filter_by(pinned=True, user_id=current_user.id).order_by(desc(Post.id)).all())
@@ -79,7 +79,7 @@ def save_topic():
     topic_name = data.get('topicName')
 
     if topic_name:
-        session = Session()
+        session = SessionLocal()
         new_topic = Topic(name=topic_name, user_id=current_user.id)
         session.add(new_topic)
         session.commit()
@@ -99,7 +99,7 @@ def edit_topic():
     topic_name = data.get('topicName')
 
     if topic_id and topic_name:
-        session = Session()
+        session = SessionLocal()
         topic = session.query(Topic).filter_by(id=topic_id, user_id=current_user.id).first()
 
         if topic:
@@ -120,7 +120,7 @@ def delete_topic():
     topic_id = data.get('topicId')
 
     if topic_id:
-        session = Session()
+        session = SessionLocal()
         topic = session.query(Topic).filter_by(id=topic_id, user_id=current_user.id).first()
 
         if topic:
@@ -138,7 +138,7 @@ def delete_topic():
 @app.route('/theme/<int:topic_id>')
 @login_required
 def theme(topic_id):
-    session = Session()
+    session = SessionLocal()
     topic = session.query(Topic).filter_by(id=topic_id, user_id=current_user.id).first()
     posts = session.query(Post).filter_by(topic_id=topic_id).order_by(desc(Post.id)).all()
     session.close()
@@ -153,7 +153,7 @@ def save_post():
     post_photo = request.files.get('postPhoto')  # Получаем файл
 
     if post_content:
-        session = Session()
+        session = SessionLocal()
         new_post = Post(text=post_content, topic_id=topic_id, user_id=current_user.id)
 
         # Если есть изображение, сохраняем его
@@ -188,7 +188,7 @@ def delete_post():
     post_id = data.get('postId')
 
     if post_id:
-        session = Session()
+        session = SessionLocal()
         post = session.query(Post).filter_by(id=post_id, user_id=current_user.id).first()
 
         if post:
@@ -216,7 +216,7 @@ def pin_post():
     post_id = data.get('postId')
 
     if post_id:
-        session = Session()
+        session = SessionLocal()
         post = session.query(Post).filter_by(id=post_id, user_id=current_user.id).first()
 
         if post:
@@ -238,7 +238,7 @@ def unpin_post():
     post_id = data.get('postId')
 
     if post_id:
-        session = Session()
+        session = SessionLocal()
         post = session.query(Post).filter_by(id=post_id, user_id=current_user.id).first()
 
         if post:
@@ -261,7 +261,7 @@ def edit_post():
     post_content = data.get('postName')
 
     if post_id and post_content:
-        session = Session()
+        session = SessionLocal()
         post = session.query(Post).filter_by(id=post_id, user_id=current_user.id).first()
 
         if post:

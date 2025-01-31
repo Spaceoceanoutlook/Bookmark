@@ -1,40 +1,42 @@
 import os
-
 from flask import Flask
 from flask_login import LoginManager
+from flask_session import Session as FlaskSession  # Переименуем, чтобы не путать с SQLAlchemy
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from config import Config
 from .models import Base, User
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
+# Подключаем Flask-Session (управляет сессиями Flask)
+FlaskSession(app)
+
 # Папка для загрузки файлов
 app.config['UPLOAD_FOLDER'] = os.path.join('app', 'static', 'uploads')
-app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # Максимальный размер файла 5 МБ
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5 МБ
 
-def create_upload_folder():
-    upload_folder = app.config['UPLOAD_FOLDER']
-    if not os.path.exists(upload_folder):
-        os.makedirs(upload_folder)
+# Создаём папку для загрузки, если её нет
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-create_upload_folder()
+# База данных (SQLAlchemy)
+engine = create_engine(Config.SQLALCHEMY_DATABASE_URI, connect_args={"check_same_thread": False})
+SessionLocal = scoped_session(sessionmaker(bind=engine))  # Это SQLAlchemy-сессия
 
-engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
-Session = sessionmaker(bind=engine)
-
+# Flask-Login
 login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
-def create_app():
-    login_manager.init_app(app)
+@login_manager.user_loader
+def load_user(user_id):
+    """Загружает пользователя по ID для Flask-Login."""
+    session = SessionLocal()
+    user = session.get(User, int(user_id))
+    session.close()  # Закрываем сессию после запроса
+    return user
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        session = Session()
-        return session.query(User).get(int(user_id))
-
-    with app.app_context():
-        from . import routes
-
-    return app
+# Импортируем маршруты
+with app.app_context():
+    from . import routes
