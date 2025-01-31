@@ -2,5 +2,5 @@ venv-bookmark
 .idea
 __pycache__
 uploads
+flask_session
 *.db
-
