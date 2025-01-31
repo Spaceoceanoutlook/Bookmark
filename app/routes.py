@@ -219,3 +219,54 @@ def pin_post():
             return jsonify({"success": False, "message": "Post not found"})
     else:
         return jsonify({"success": False, "message": "Post ID is required"})
+
+
+@app.route('/unpin_post', methods=['POST'])
+@login_required
+def unpin_post():
+    data = request.json
+    post_id = data.get('postId')
+
+    if post_id:
+        session = Session()
+        post = session.query(Post).filter_by(id=post_id, user_id=current_user.id).first()
+
+        if post:
+            post.pinned = False
+            session.commit()
+            session.close()
+            return jsonify({"success": True})
+        else:
+            session.close()
+            return jsonify({"success": False, "message": "Post not found"})
+    else:
+        return jsonify({"success": False, "message": "Post ID is required"})
+
+
+@app.route('/edit_post', methods=['POST'])
+@login_required
+def edit_post():
+    data = request.json
+    post_id = data.get('postId')
+    post_content = data.get('postName')
+
+    if post_id and post_content:
+        session = Session()
+        post = session.query(Post).filter_by(id=post_id, user_id=current_user.id).first()
+
+        if post:
+            post.text = post_content
+            try:
+                session.commit()
+                session.refresh(post)
+                return jsonify({"success": True, "postId": post.id, "postContent": post.text})
+            except Exception as e:
+                session.rollback()  # Откат транзакции в случае ошибки
+                return jsonify({"success": False, "message": "Database error: " + str(e)})
+            finally:
+                session.close()
+        else:
+            session.close()
+            return jsonify({"success": False, "message": "Post not found"})
+    else:
+        return jsonify({"success": False, "message": "Post ID and content are required"})
