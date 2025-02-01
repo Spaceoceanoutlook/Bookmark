@@ -1,3 +1,10 @@
+/* Общие стили */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 main {
     display: flex;
     justify-content: space-between;
@@ -6,10 +13,13 @@ main {
     margin: auto;
 }
 
+.sidebar, .pinned, .topics {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+}
+
 .sidebar, .pinned {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin: 10px;
     flex: 1;
@@ -22,15 +32,13 @@ main {
 .pinned {
     margin-left: 20px;
     background-color: transparent;
-    box-shadow: none;
-    border: none;
     padding: 0;
 }
 
 .topics {
-    background-color: transparent;
-    box-shadow: none;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
     margin: 10px;
     flex: 1;
 }
@@ -40,16 +48,11 @@ main {
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 5px;
-    margin-bottom: 15px; /* Это значение сделает отступы одинаковыми */
-    position: relative;
     text-align: center;
     width: 500px;
-    margin: 0 auto;
+    margin: 0 auto 10px; /* Отступ снизу для всех блоков */
     word-wrap: break-word;
-    box-sizing: border-box;
 }
-
-
 
 .topic-title, .post-title {
     font-size: 32px;
@@ -68,16 +71,9 @@ main {
     font-family: 'Montserrat', sans-serif;
 }
 
+/* Для закрепленных записей */
 .pinned-post {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    word-wrap: break-word;
-    white-space: normal;
-    overflow-wrap: break-word;
     max-width: 800px;
     width: 100%;
 }
@@ -85,11 +81,6 @@ main {
 .pinned-post .post-title {
     font-size: 24px;
     font-family: 'Montserrat', sans-serif;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    max-width: 100%;
-    word-break: break-word;
 }
 
 .pinned-post img {
@@ -99,25 +90,24 @@ main {
     border-radius: 5px;
 }
 
+/* Формы */
 .add-topic-form, .add-postform {
     display: none;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 500px; /* Ширина родительского блока */
-    margin: 20px auto; /* Центрируем блок по ширине */
-    box-sizing: border-box;
-    text-align: center; /* Центрируем текст внутри блока */
+    width: 500px;
+    margin: 20px auto;
+    text-align: center;
 }
 
 .add-topic-form input[type="text"], .add-postform input[type="text"] {
-    width: 400px; /* Ширина поля ввода */
+    width: 400px;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    box-sizing: border-box;
 }
 
 .add-topic-form button, .add-postform button {
@@ -127,33 +117,22 @@ main {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    width: 400px; /* Ширина кнопки */
-    box-sizing: border-box;
+    width: 400px;
     font-size: 16px;
-    margin-top: 10px; /* Отступ сверху */
-}
-
-
-.sidebar {
-    background-color: transparent;
-    box-shadow: none;
-    border: none;
-    padding: 0;
-    margin-right: 20px;
+    margin-top: 10px;
 }
 
 #addTopicButton {
     background-color: #007BFF;
     color: white;
     border: none;
-    padding: 10px 10px;
+    padding: 10px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     width: 500px;
-    margin: 0 auto 20px auto; /* Центрируем кнопку */
+    margin: 0 auto 20px;
     text-align: center;
-    box-sizing: border-box;
     display: block;
 }
 
