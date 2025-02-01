@@ -5,7 +5,8 @@ main {
     max-width: 1200px;
     margin: auto;
 }
-.sidebar, .topics, .pinned {
+
+.sidebar, .pinned {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -13,9 +14,11 @@ main {
     margin: 10px;
     flex: 1;
 }
+
 .sidebar {
     margin-right: 20px;
 }
+
 .pinned {
     margin-left: 20px;
     background-color: transparent;
@@ -23,17 +26,30 @@ main {
     border: none;
     padding: 0;
 }
+
+.topics {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 20px;
+    margin: 10px;
+    flex: 1;
+}
+
 .topic, .pinned-post {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 15px; /* Это значение сделает отступы одинаковыми */
     position: relative;
     text-align: center;
-    max-width: 100%; /* Ограничиваем ширину */
-    word-wrap: break-word; /* Разрыв слов */
+    width: 500px;
+    margin: 0 auto;
+    word-wrap: break-word;
+    box-sizing: border-box;
 }
+
+
 
 .topic-title, .post-title {
     font-size: 32px;
@@ -62,8 +78,8 @@ main {
     word-wrap: break-word;
     white-space: normal;
     overflow-wrap: break-word;
-    max-width: 800px; /* Увеличиваем максимальную ширину */
-    width: 100%; /* Для корректного растягивания на всю ширину контейнера */
+    max-width: 800px;
+    width: 100%;
 }
 
 .pinned-post .post-title {
@@ -77,10 +93,10 @@ main {
 }
 
 .pinned-post img {
-    max-width: 520px; /* Максимальная ширина изображения */
-    max-height: 520px; /* Максимальная высота изображения */
-    object-fit: contain; /* Масштабирование изображения */
-    border-radius: 5px; /* Закругленные углы */
+    max-width: 320px;
+    max-height: 320px;
+    object-fit: contain;
+    border-radius: 5px;
 }
 
 .add-topic-form, .add-postform {
@@ -89,14 +105,14 @@ main {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 100%;
-    max-width: 800px;
-    margin-top: 20px;
+    width: 500px; /* Ширина родительского блока */
+    margin: 20px auto; /* Центрируем блок по ширине */
     box-sizing: border-box;
+    text-align: center; /* Центрируем текст внутри блока */
 }
 
 .add-topic-form input[type="text"], .add-postform input[type="text"] {
-    width: 100%;
+    width: 400px; /* Ширина поля ввода */
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
@@ -111,54 +127,36 @@ main {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;
+    width: 400px; /* Ширина кнопки */
     box-sizing: border-box;
     font-size: 16px;
+    margin-top: 10px; /* Отступ сверху */
 }
 
-.add-topic-form button:hover, .add-postform button:hover {
+
+.sidebar {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin-right: 20px;
+}
+
+#addTopicButton {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 500px;
+    margin: 0 auto 20px auto; /* Центрируем кнопку */
+    text-align: center;
+    box-sizing: border-box;
+    display: block;
+}
+
+#addTopicButton:hover {
     background-color: #0056b3;
-}
-
-/* Media Queries for Mobile Devices */
-@media (max-width: 768px) {
-    main {
-        flex-direction: column;
-        align-items: center;
-    }
-    .sidebar, .topics, .pinned {
-        width: 90%;
-        margin: 10px auto;
-    }
-    .sidebar {
-        margin-right: 0;
-    }
-    .pinned {
-        margin-left: 0;
-    }
-    .topic-title, .post-title {
-        font-size: 24px;
-    }
-    .section-title {
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 480px) {
-    .topic-title, .post-title {
-        font-size: 20px;
-    }
-    .section-title {
-        font-size: 16px;
-    }
-    .sidebar, .topics, .pinned {
-        padding: 15px;
-    }
-    button {
-        padding: 10px;
-        font-size: 14px;
-    }
-    .topic, .pinned-post {
-        text-align: center;
-    }
 }
