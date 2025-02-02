@@ -172,27 +172,26 @@ document.addEventListener('click', function(event) {
     if (event.target && event.target.classList.contains('unpinPostButton')) {
         const postId = event.target.getAttribute('data-post-id');
 
-        if (confirm('Вы уверены, что хотите открепить эту запись?')) {
-            fetch('/unpin_post', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ postId: postId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const postDiv = event.target.closest('.pinned-post');
-                    postDiv.remove();
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
+        // Удаляем вызов confirm
+        fetch('/unpin_post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ postId: postId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const postDiv = event.target.closest('.pinned-post');
+                postDiv.remove();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
     if (event.target && event.target.classList.contains('pinPostButton')) {

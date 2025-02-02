@@ -95,9 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    alert('Запись успешно закреплена!');
-                } else {
+                if (!data.success) {
                     alert(data.message);
                 }
             })
