@@ -68,36 +68,3 @@ body {
 .login-link a:hover {
     text-decoration: underline;
 }
-
-/* Media Queries for Mobile Devices */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-    }
-    .form-group input {
-        font-size: 14px;
-    }
-    .btn {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
-    .login-link {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 10px;
-    }
-    .form-group input {
-        font-size: 12px;
-    }
-    .btn {
-        padding: 8px 15px;
-        font-size: 12px;
-    }
-    .login-link {
-        font-size: 10px;
-    }
-}

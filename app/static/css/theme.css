@@ -31,14 +31,17 @@ main {
     background-color: #0056b3;
 }
 .posts {
-    background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 100%;
     max-width: 800px;
     margin-top: 20px;
+    background-color: transparent; /* Убираем фон */
+    box-shadow: none; /* Убираем тень */
+    padding: 0; /* Убираем отступы */
 }
+
 .post {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
