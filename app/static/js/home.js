@@ -99,6 +99,8 @@ document.addEventListener('click', function(event) {
                 if (data.success) {
                     const topicDiv = event.target.closest('.topic');
                     topicDiv.remove();
+                    // Обновляем страницу после удаления темы
+                    location.reload();
                 } else {
                     alert(data.message);
                 }
