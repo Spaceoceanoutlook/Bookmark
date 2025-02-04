@@ -64,7 +64,7 @@ main {
     max-width: 500px;
     border-radius: 5px;
 }
-.add-post-form, .add-postform {
+.add-post-form, .edit-post-form {
     display: none;
     background-color: white;
     border-radius: 8px;
@@ -75,41 +75,25 @@ main {
     margin-top: 20px;
     box-sizing: border-box;
 }
-.add-post-form input[type="text"], .add-postform input[type="text"] {
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.input-group input[type="text"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-right: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
-}
-.add-post-form button, .add-postform button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 16px;
-}
-.add-post-form button:hover, .add-postform button:hover {
-    background-color: #0056b3;
 }
 .file-upload-wrapper {
     position: relative;
     overflow: hidden;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
-    width: 100%;
-    border: 2px dashed #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    text-align: center;
     cursor: pointer;
     transition: background-color 0.3s;
     box-sizing: border-box;
@@ -127,14 +111,22 @@ main {
     cursor: pointer;
 }
 .file-upload-wrapper .upload-icon {
-    font-size: 32px;
+    font-size: 24px;
     color: #007BFF;
-    margin-bottom: 10px;
 }
-.file-upload-wrapper .upload-text {
+.add-post-form button, .edit-post-form button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
     font-size: 16px;
-    color: #333;
-    font-family: 'Montserrat', sans-serif;
+}
+.add-post-form button:hover, .edit-post-form button:hover {
+    background-color: #0056b3;
 }
 
 /* Стили для миниатюры в форме */
@@ -154,4 +146,3 @@ main {
     display: block;
     margin: 10px auto;
 }
-

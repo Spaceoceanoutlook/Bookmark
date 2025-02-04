@@ -67,6 +67,16 @@ document.addEventListener('DOMContentLoaded', function () {
                             <button class="pinPostButton">Закрепить</button>
                             <button class="deletePostButton">Удалить</button>
                         </div>
+                        <div class="edit-post-form" style="display: none;">
+                            <div class="input-group">
+                                <input type="text" class="editPostContent" placeholder="Введите новое название записи">
+                                <label for="editPostPhoto" class="file-upload-wrapper">
+                                    <span class="upload-icon">📁</span>
+                                    <input type="file" class="editPostPhoto" accept="image/*">
+                                </label>
+                            </div>
+                            <button class="saveEditPostButton">Сохранить</button>
+                        </div>
                     `;
 
                     if (data.photoFilename) {
@@ -135,23 +145,46 @@ document.addEventListener('DOMContentLoaded', function () {
             const post = event.target.closest('.post');
             const editForm = post.querySelector('.edit-post-form');
             const input = editForm.querySelector('.editPostContent');
+            const fileInput = editForm.querySelector('.editPostPhoto');
 
             input.value = event.target.dataset.postText;
             editForm.style.display = 'block';
 
-            editForm.querySelector('.saveeditPostButton').onclick = function () {
-                const newPostName = input.value;
-                if (newPostName) {
+            editForm.querySelector('.saveEditPostButton').onclick = function () {
+                const newPostContent = input.value;
+                const newPostPhoto = fileInput.files[0];
+
+                if (newPostContent) {
+                    const formData = new FormData();
+                    formData.append('postId', post.dataset.postId);
+                    formData.append('postContent', newPostContent);
+                    if (newPostPhoto) {
+                        formData.append('postPhoto', newPostPhoto);
+                    }
+
                     fetch('/edit_post', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ postId: post.dataset.postId, postName: newPostName })
+                        body: formData
                     })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            post.querySelector('.post-title').textContent = newPostName;
+                            post.querySelector('.post-title').textContent = newPostContent;
                             editForm.style.display = 'none';
+
+                            if (data.photoFilename) {
+                                const img = post.querySelector('img');
+                                if (img) {
+                                    img.src = `/static/uploads/${data.photoFilename}`;
+                                } else {
+                                    const newImg = document.createElement('img');
+                                    newImg.src = `/static/uploads/${data.photoFilename}`;
+                                    newImg.classList.add('post-image');
+                                    post.insertBefore(newImg, post.querySelector('.actions'));
+                                }
+                            }
+                        } else {
+                            alert(data.message);
                         }
                     })
                     .catch(console.error);

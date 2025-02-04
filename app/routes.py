@@ -256,9 +256,9 @@ def unpin_post():
 @app.route('/edit_post', methods=['POST'])
 @login_required
 def edit_post():
-    data = request.json
-    post_id = data.get('postId')
-    post_content = data.get('postName')
+    post_id = request.form.get('postId')
+    post_content = request.form.get('postContent')
+    post_photo = request.files.get('postPhoto')
 
     if post_id and post_content:
         session = SessionLocal()
@@ -266,10 +266,15 @@ def edit_post():
 
         if post:
             post.text = post_content
+            if post_photo:
+                filename = secure_filename(post_photo.filename)
+                post_photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                post.photo = filename
+
             try:
                 session.commit()
                 session.refresh(post)
-                return jsonify({"success": True, "postId": post.id, "postContent": post.text})
+                return jsonify({"success": True, "postId": post.id, "postContent": post.text, "photoFilename": post.photo})
             except Exception as e:
                 session.rollback()  # Откат транзакции в случае ошибки
                 return jsonify({"success": False, "message": "Database error: " + str(e)})
