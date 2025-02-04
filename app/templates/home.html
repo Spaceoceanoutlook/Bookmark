@@ -48,6 +48,9 @@
             {% for post in pinned_posts %}
             <div class="pinned-post">
                 <div class="post-title">{{ post.text }}</div>
+                {% if post.photo %}
+                <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image">
+                {% endif %}
                 <div class="actions">
                     <button class="editPostButton" data-post-id="{{ post.id }}" data-post-name="{{ post.text }}">Редактировать</button>
                     <button class="unpinPostButton" data-post-id="{{ post.id }}">Открепить</button>
@@ -57,9 +60,7 @@
                     <input type="text" class="editPostContent" placeholder="Введите новое название записи">
                     <button class="saveeditPostButton">Сохранить</button>
                 </div>
-                {% if post.photo %}
-                <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image">
-                {% endif %}
+
             </div>
             {% endfor %}
         </div>

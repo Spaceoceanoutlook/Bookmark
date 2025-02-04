@@ -30,69 +30,69 @@ document.addEventListener('DOMContentLoaded', function () {
         const postPhoto = document.getElementById('postPhoto').files[0];
         const topicId = document.getElementById('addPostForm').dataset.topicId;
 
+        const formData = new FormData();
+        formData.append('topicId', topicId);
         if (postContent) {
-            const formData = new FormData();
             formData.append('postContent', postContent);
-            formData.append('topicId', topicId);
-            if (postPhoto) {
-                formData.append('postPhoto', postPhoto);
-            }
-
-            fetch('/save_post', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Очистка формы и превью фото
-                    document.getElementById('postContent').value = '';
-                    document.getElementById('postPhoto').value = '';
-
-                    const preview = document.getElementById('photoPreview');
-                    if (preview) {
-                        preview.remove();
-                    }
-
-                    document.getElementById('addPostForm').style.display = 'none';
-
-                    // Добавление поста в список
-                    const postDiv = document.createElement('div');
-                    postDiv.className = 'post';
-                    postDiv.setAttribute('data-post-id', data.postId);
-                    postDiv.innerHTML = `
-                        <div class="post-title">${data.postContent}</div>
-                        <div class="actions">
-                            <button class="editPostButton" data-post-id="${data.postId}" data-post-text="${data.postContent}">Редактировать</button>
-                            <button class="pinPostButton">Закрепить</button>
-                            <button class="deletePostButton">Удалить</button>
-                        </div>
-                        <div class="edit-post-form" style="display: none;">
-                            <div class="input-group">
-                                <input type="text" class="editPostContent" placeholder="Введите новое название записи">
-                                <label for="editPostPhoto" class="file-upload-wrapper">
-                                    <span class="upload-icon">📁</span>
-                                    <input type="file" class="editPostPhoto" accept="image/*">
-                                </label>
-                            </div>
-                            <button class="saveEditPostButton">Сохранить</button>
-                        </div>
-                    `;
-
-                    if (data.photoFilename) {
-                        const img = document.createElement('img');
-                        img.src = `/static/uploads/${data.photoFilename}`;
-                        img.classList.add('post-image'); // Добавляем класс для изображений в постах
-                        postDiv.insertBefore(img, postDiv.querySelector('.actions'));
-                    }
-
-                    document.getElementById('posts').prepend(postDiv);
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(console.error);
         }
+        if (postPhoto) {
+            formData.append('postPhoto', postPhoto);
+        }
+
+        fetch('/save_post', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Очистка формы и превью фото
+                document.getElementById('postContent').value = '';
+                document.getElementById('postPhoto').value = '';
+
+                const preview = document.getElementById('photoPreview');
+                if (preview) {
+                    preview.remove();
+                }
+
+                document.getElementById('addPostForm').style.display = 'none';
+
+                // Добавление поста в список
+                const postDiv = document.createElement('div');
+                postDiv.className = 'post';
+                postDiv.setAttribute('data-post-id', data.postId);
+                postDiv.innerHTML = `
+                    <div class="post-title">${data.postContent || ''}</div>
+                    <div class="actions">
+                        <button class="editPostButton" data-post-id="${data.postId}" data-post-text="${data.postContent || ''}">Редактировать</button>
+                        <button class="pinPostButton">Закрепить</button>
+                        <button class="deletePostButton">Удалить</button>
+                    </div>
+                    <div class="edit-post-form" style="display: none;">
+                        <div class="input-group">
+                            <input type="text" class="editPostContent" placeholder="Введите новое название записи">
+                            <label for="editPostPhoto_${data.postId}" class="file-upload-wrapper">
+                                <span class="upload-icon">📁</span>
+                                <input type="file" id="editPostPhoto_${data.postId}" class="editPostPhoto" accept="image/*">
+                            </label>
+                        </div>
+                        <button class="saveEditPostButton">Сохранить</button>
+                    </div>
+                `;
+
+                if (data.photoFilename) {
+                    const img = document.createElement('img');
+                    img.src = `/static/uploads/${data.photoFilename}`;
+                    img.classList.add('post-image'); // Добавляем класс для изображений в постах
+                    postDiv.insertBefore(img, postDiv.querySelector('.actions'));
+                }
+
+                document.getElementById('posts').prepend(postDiv);
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(console.error);
     });
 
     // Удаление поста
@@ -154,41 +154,41 @@ document.addEventListener('DOMContentLoaded', function () {
                 const newPostContent = input.value;
                 const newPostPhoto = fileInput.files[0];
 
+                const formData = new FormData();
+                formData.append('postId', post.dataset.postId);
                 if (newPostContent) {
-                    const formData = new FormData();
-                    formData.append('postId', post.dataset.postId);
                     formData.append('postContent', newPostContent);
-                    if (newPostPhoto) {
-                        formData.append('postPhoto', newPostPhoto);
-                    }
-
-                    fetch('/edit_post', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            post.querySelector('.post-title').textContent = newPostContent;
-                            editForm.style.display = 'none';
-
-                            if (data.photoFilename) {
-                                const img = post.querySelector('img');
-                                if (img) {
-                                    img.src = `/static/uploads/${data.photoFilename}`;
-                                } else {
-                                    const newImg = document.createElement('img');
-                                    newImg.src = `/static/uploads/${data.photoFilename}`;
-                                    newImg.classList.add('post-image');
-                                    post.insertBefore(newImg, post.querySelector('.actions'));
-                                }
-                            }
-                        } else {
-                            alert(data.message);
-                        }
-                    })
-                    .catch(console.error);
                 }
+                if (newPostPhoto) {
+                    formData.append('postPhoto', newPostPhoto);
+                }
+
+                fetch('/edit_post', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        post.querySelector('.post-title').textContent = newPostContent || '';
+                        editForm.style.display = 'none';
+
+                        if (data.photoFilename) {
+                            const img = post.querySelector('img');
+                            if (img) {
+                                img.src = `/static/uploads/${data.photoFilename}`;
+                            } else {
+                                const newImg = document.createElement('img');
+                                newImg.src = `/static/uploads/${data.photoFilename}`;
+                                newImg.classList.add('post-image');
+                                post.insertBefore(newImg, post.querySelector('.actions'));
+                            }
+                        }
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(console.error);
             };
         }
     });

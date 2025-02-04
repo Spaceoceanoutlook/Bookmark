@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: d6bd2f12939d
+Revision ID: 3351a0c9dffc
 Revises: 
-Create Date: 2025-01-31 12:46:32.012748
+Create Date: 2025-02-04 17:37:30.378235
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'd6bd2f12939d'
+revision: str = '3351a0c9dffc'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -41,7 +41,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('topic_id', sa.Integer(), nullable=False),
-    sa.Column('text', sa.String(), nullable=False),
+    sa.Column('text', sa.String(), nullable=True),
     sa.Column('photo', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.Column('pinned', sa.Boolean(), nullable=False),
