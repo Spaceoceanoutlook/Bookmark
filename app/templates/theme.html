@@ -44,9 +44,9 @@
                 <div class="edit-post-form" style="display: none;">
                     <div class="input-group">
                         <input type="text" class="editPostContent" placeholder="Введите новое название записи">
-                        <label for="editPostPhoto" class="file-upload-wrapper">
+                        <label for="editPostPhoto_{{ post.id }}" class="file-upload-wrapper">
                             <span class="upload-icon">📁</span>
-                            <input type="file" class="editPostPhoto" accept="image/*">
+                            <input type="file" id="editPostPhoto_{{ post.id }}" class="editPostPhoto" accept="image/*">
                         </label>
                     </div>
                     <button class="saveEditPostButton">Сохранить</button>
