@@ -136,3 +136,22 @@ main {
     color: #333;
     font-family: 'Montserrat', sans-serif;
 }
+
+/* Стили для миниатюры в форме */
+#photoPreview {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    display: block;
+    margin: 10px auto;
+}
+
+/* Стили для загруженного изображения в посте */
+.post img.post-image {
+    max-width: 500px;
+    max-height: 500px;
+    object-fit: cover;
+    display: block;
+    margin: 10px auto;
+}
+

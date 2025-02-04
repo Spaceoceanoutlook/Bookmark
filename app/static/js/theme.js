@@ -4,11 +4,31 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('addPostForm').style.display = 'block';
     });
 
-    // Сохранить новую запись
+    // Отображение миниатюры при выборе изображения
+    document.getElementById('postPhoto').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                let preview = document.getElementById('photoPreview');
+                if (!preview) {
+                    preview = document.createElement('img');
+                    preview.id = 'photoPreview';
+                    preview.classList.add('post-image'); // Добавляем нужный класс для миниатюры
+                    document.getElementById('addPostForm').appendChild(preview);
+                }
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Сохранение нового поста
     document.getElementById('savePostButton').addEventListener('click', function () {
         const postContent = document.getElementById('postContent').value;
         const postPhoto = document.getElementById('postPhoto').files[0];
-        const topicId = document.getElementById('addPostForm').dataset.topicId; // Получаем ID темы
+        const topicId = document.getElementById('addPostForm').dataset.topicId;
 
         if (postContent) {
             const formData = new FormData();
@@ -25,6 +45,18 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    // Очистка формы и превью фото
+                    document.getElementById('postContent').value = '';
+                    document.getElementById('postPhoto').value = '';
+
+                    const preview = document.getElementById('photoPreview');
+                    if (preview) {
+                        preview.remove();
+                    }
+
+                    document.getElementById('addPostForm').style.display = 'none';
+
+                    // Добавление поста в список
                     const postDiv = document.createElement('div');
                     postDiv.className = 'post';
                     postDiv.setAttribute('data-post-id', data.postId);
@@ -35,22 +67,16 @@ document.addEventListener('DOMContentLoaded', function () {
                             <button class="pinPostButton">Закрепить</button>
                             <button class="deletePostButton">Удалить</button>
                         </div>
-                        <div class="add-postform edit-post-form" style="display: none;">
-                            <input type="text" class="editPostContent" placeholder="Введите новое название записи">
-                            <button class="saveeditPostButton">Сохранить</button>
-                        </div>
                     `;
 
                     if (data.photoFilename) {
                         const img = document.createElement('img');
                         img.src = `/static/uploads/${data.photoFilename}`;
+                        img.classList.add('post-image'); // Добавляем класс для изображений в постах
                         postDiv.insertBefore(img, postDiv.querySelector('.actions'));
                     }
 
                     document.getElementById('posts').prepend(postDiv);
-                    document.getElementById('addPostForm').style.display = 'none';
-                    document.getElementById('postContent').value = '';
-                    document.getElementById('postPhoto').value = '';
                 } else {
                     alert(data.message);
                 }
@@ -59,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Удалить запись
+    // Удаление поста
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('deletePostButton')) {
             const postId = event.target.closest('.post').dataset.postId;
@@ -83,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Закрепить запись
+    // Закрепление поста
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('pinPostButton')) {
             const postId = event.target.closest('.post').dataset.postId;
@@ -103,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Редактировать запись
+    // Редактирование поста
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('editPostButton')) {
             const post = event.target.closest('.post');
