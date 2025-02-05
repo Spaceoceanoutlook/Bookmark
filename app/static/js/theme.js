@@ -165,7 +165,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 fetch('/edit_post', {
                     method: 'POST',
-                    body: formData
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        postId: post.dataset.postId,
+                        postContent: newPostContent,
+                        postPhoto: newPostPhoto ? newPostPhoto.name : null
+                    })
                 })
                 .then(response => response.json())
                 .then(data => {

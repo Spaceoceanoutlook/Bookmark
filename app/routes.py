@@ -273,9 +273,9 @@ def unpin_post():
 @app.route('/edit_post', methods=['POST'])
 @login_required
 def edit_post():
-    post_id = request.form.get('postId')
-    post_content = request.form.get('postContent')
-    post_photo = request.files.get('postPhoto')
+    data = request.get_json()
+    post_id = data.get('postId')
+    post_content = data.get('postContent')
 
     if post_id:
         session = SessionLocal()
@@ -284,13 +284,9 @@ def edit_post():
             if post:
                 if post_content is not None:
                     post.text = post_content
-                if post_photo:
-                    filename = secure_filename(post_photo.filename)
-                    post_photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    post.photo = filename
                 session.commit()
                 session.refresh(post)
-                return jsonify({"success": True, "postId": post.id, "postContent": post.text or '', "photoFilename": post.photo})
+                return jsonify({"success": True, "postId": post.id, "postContent": post.text or ''})
             else:
                 return jsonify({"success": False, "message": "Post not found"})
         except Exception as e:
