@@ -29,6 +29,7 @@ class User(Base, UserMixin):
     def is_anonymous(self):
         return False
 
+
 class Topic(Base):
     __tablename__ = 'topics'
 
@@ -44,6 +45,7 @@ class Topic(Base):
         if len(value) > 33:
             raise ValueError("Name cannot be longer than 100 characters")
         return value
+
 
 class Post(Base):
     __tablename__ = 'posts'

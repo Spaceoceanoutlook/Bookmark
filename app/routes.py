@@ -7,9 +7,14 @@ from . import SessionLocal
 from .models import User, Topic, Post
 from werkzeug.utils import secure_filename
 
+
 @app.route('/')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))  # Перенаправляем на home.html
     return render_template('index.html')
+    # return render_template('index.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
