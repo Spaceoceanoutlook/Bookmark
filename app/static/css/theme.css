@@ -115,6 +115,7 @@ button:hover {
     display: block;
     margin: 0 auto 10px;
     max-width: 500px;
+    max-height: 500px;
     border-radius: 5px;
 }
 
