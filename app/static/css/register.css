@@ -2,55 +2,58 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #4A90E2, #8E44AD);
-    color: #fff;
+    background: linear-gradient(135deg, #F5F7FA, #C3CFE2);
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 40px;
     max-width: 400px;
     width: 100%;
     text-align: center;
-    backdrop-filter: blur(10px);
 }
 
 .container h2 {
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 20px;
-    color: #fff;
+    color: #4A90E2;
+    font-size: 28px;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    text-align: left;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
-    color: #fff;
+    color: #333;
+    font-size: 14px;
 }
 
 .form-group input {
-    width: calc(100% - 22px);
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
     font-size: 16px;
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.9);
     color: #333;
+    transition: border-color 0.3s ease;
 }
 
 .form-group input:focus {
-    border-color: #007BFF;
+    border-color: #4A90E2;
     outline: none;
 }
 
@@ -60,9 +63,10 @@ body {
     border: none;
     padding: 15px 30px;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
+    width: 100%;
     transition: background-color 0.3s ease;
 }
 
@@ -72,17 +76,18 @@ body {
 
 .login-link {
     margin-top: 20px;
-    font-size: 14px;
-    color: #fff;
+    font-size: 16px;
+    color: #666;
 }
 
 .login-link a {
-    color: #FFA500;
+    color: #4A90E2;
     font-weight: bold;
-    font-size: 16px;
-    text-decoration: underline;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .login-link a:hover {
-    text-decoration: none;
+    color: #3A7BD5;
+    text-decoration: underline;
 }
