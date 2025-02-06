@@ -75,17 +75,18 @@ main {
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 15px;
     border-radius: 8px;
-    text-align: left;
+    text-align: center; /* Center text horizontally */
     word-wrap: break-word;
     margin-bottom: 5px;
 }
 
 .topic-title, .post-title {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
     margin-bottom: 10px;
     font-family: 'Montserrat', sans-serif;
     color: #333;
+    text-align: center; /* Center title text */
 }
 
 .section-title {
@@ -99,9 +100,8 @@ main {
 }
 
 .pinned-post img {
-    display: block;
     margin: 10px auto;
-    width: 300px;
+    width: 315px;
     height: auto;
     border-radius: 5px;
 }
@@ -164,7 +164,7 @@ main {
 .actions {
     display: flex;
     gap: 10px;
-    justify-content: flex-end;
+    justify-content: center; /* Center buttons within .actions */
     margin-top: 10px;
 }
 

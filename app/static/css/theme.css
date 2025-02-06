@@ -89,21 +89,21 @@ main {
     border-radius: 8px;
     margin-bottom: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center text within posts */
 }
 
 .post-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
-    text-align: left;
+    text-align: center; /* Center post titles */
     font-family: 'Montserrat', sans-serif;
     color: #333;
 }
 
 .post img {
-    display: block;
     margin: 10px auto;
-    width: 400px;
+    width: 315px;
     height: auto;
     border-radius: 5px;
 }
@@ -117,6 +117,7 @@ main {
     width: 100%;
     max-width: 800px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center form content */
 }
 
 .input-group {
@@ -124,6 +125,7 @@ main {
     align-items: center;
     margin-bottom: 10px;
     gap: 10px;
+    justify-content: center; /* Center input group */
 }
 
 .input-group input[type="text"] {
@@ -179,7 +181,7 @@ main {
 .actions {
     display: flex;
     gap: 10px;
-    justify-content: flex-end;
+    justify-content: center; /* Center action buttons */
     margin-top: 10px;
 }
 
