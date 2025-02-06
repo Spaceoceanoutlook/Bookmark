@@ -8,65 +8,50 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #4A90E2, #8E44AD);
-    color: #fff;
+    background: linear-gradient(135deg, #F5F7FA, #C3CFE2);
+    color: #333;
+    min-height: 100vh;
 }
 
 a {
     text-decoration: none;
-    color: #fff;
+    color: #4A90E2;
 }
 
 header {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    padding: 15px 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 header a {
-    color: white;
+    color: #4A90E2;
     text-decoration: none;
     margin-left: 20px;
+    font-weight: bold;
 }
 
 main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 100px 20px 20px;
     max-width: 1200px;
     margin: auto;
-}
-
-button {
-    background-color: #4A90E2;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    width: 100%;
-    font-family: 'Montserrat', sans-serif;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #3A7BD5;
 }
 
 .theme-title {
     font-size: 32px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #fff;
+    color: #333;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
 }
@@ -98,85 +83,76 @@ button:hover {
 }
 
 .post {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 15px;
-    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
     margin-bottom: 15px;
-    position: relative;
-    word-wrap: break-word;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .post-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
-    text-align: center;
+    text-align: left;
     font-family: 'Montserrat', sans-serif;
+    color: #333;
 }
 
 .post img {
     display: block;
-    margin: 0 auto 10px;
-    max-width: 500px;
-    max-height: 500px;
+    margin: 10px auto;
+    max-width: 100%;
+    height: auto;
     border-radius: 5px;
 }
 
 .add-post-form, .edit-post-form {
     display: none;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    margin-top: 20px;
     width: 100%;
     max-width: 800px;
-    margin-top: 20px;
-    box-sizing: border-box;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .input-group {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    gap: 10px;
 }
 
 .input-group input[type="text"] {
     width: 100%;
     padding: 10px;
-    margin-right: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.9);
     color: #333;
 }
 
 .file-upload-wrapper {
-    position: relative;
-    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.3s;
-    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: background-color 0.3s ease;
 }
 
 .file-upload-wrapper:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .file-upload-wrapper input[type="file"] {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
+    display: none;
 }
 
 .file-upload-wrapper .upload-icon {
@@ -192,7 +168,6 @@ button:hover {
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
-    box-sizing: border-box;
     font-size: 16px;
     transition: background-color 0.3s ease;
 }
@@ -201,42 +176,24 @@ button:hover {
     background-color: #3A7BD5;
 }
 
-#photoPreview {
-    max-width: 200px;
-    max-height: 200px;
-    object-fit: cover;
-    display: block;
-    margin: 10px auto;
-}
-
-.post img.post-image {
-    max-width: 500px;
-    max-height: 500px;
-    object-fit: cover;
-    display: block;
-    margin: 10px auto;
-}
-
 .actions {
     display: flex;
     gap: 10px;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 10px;
 }
 
 .actions button {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #4A90E2;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-    font-family: 'Roboto', sans-serif;
     transition: background-color 0.3s ease;
 }
 
 .actions button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.8);
 }
-

@@ -33,7 +33,7 @@
             <div class="post" data-post-id="{{ post.id }}">
                 <div class="post-title">{{ post.text }}</div>
                 {% if post.photo %}
-                <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image">
+                <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image" class="post-image">
                 {% endif %}
                 <div class="actions">
                     <button class="editPostButton" data-post-id="{{ post.id }}" data-post-text="{{ post.text }}">Редактировать</button>

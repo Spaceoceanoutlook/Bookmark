@@ -1,30 +1,58 @@
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #4A90E2, #8E44AD);
-    color: #fff;
+    background: linear-gradient(135deg, #F5F7FA, #C3CFE2);
+    color: #333;
     text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 header {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: bold;
-    color: white;
+    color: #4A90E2;
+}
+
+.container {
+    margin-top: 100px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
 .btn {
-    background: #4A90E2; /* Изменен цвет на синий */
+    background: #4A90E2;
     color: white;
     padding: 12px 24px;
     border-radius: 8px;
@@ -32,23 +60,22 @@ header {
     font-weight: bold;
     transition: all 0.3s ease;
     display: inline-block;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn:hover {
-    background: #3A7BD5; /* Темнее оттенок синего для hover */
+    background: #3A7BD5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary {
     background: transparent;
-    border: 2px solid white;
+    border: 2px solid #4A90E2;
+    color: #4A90E2;
+}
+
+.btn-secondary:hover {
+    background: #4A90E2;
     color: white;
-}
-
-.container {
-    margin-top: 100px;
-    padding: 20px;
-}
-
-.actions {
-    margin-top: 20px;
 }
