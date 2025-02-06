@@ -24,7 +24,7 @@ header {
 }
 
 .btn {
-    background: #e04f67;
+    background: #4A90E2; /* Изменен цвет на синий */
     color: white;
     padding: 12px 24px;
     border-radius: 8px;
@@ -35,7 +35,7 @@ header {
 }
 
 .btn:hover {
-    background: #0056b3;
+    background: #3A7BD5; /* Темнее оттенок синего для hover */
 }
 
 .btn-secondary {
