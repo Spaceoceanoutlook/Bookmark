@@ -1,8 +1,36 @@
-/* Общие стили */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+header {
+    background-color: #007BFF;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
 }
 
 main {
@@ -31,8 +59,6 @@ main {
 
 .pinned {
     margin-left: 20px;
-    background-color: transparent;
-    padding: 10;
 }
 
 .topics {
@@ -76,7 +102,6 @@ main {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     width: 600px;
-
 }
 
 .pinned-post .post-title {
@@ -92,7 +117,7 @@ main {
 }
 
 /* Формы */
-.add-topic-form, .add-postform {
+.add-topic-form, .add-post-form {
     display: none;
     background-color: white;
     border-radius: 8px;
@@ -103,7 +128,7 @@ main {
     text-align: center;
 }
 
-.add-topic-form input[type="text"], .add-postform input[type="text"] {
+.add-topic-form input[type="text"], .add-post-form input[type="text"] {
     width: 400px;
     padding: 10px;
     margin-bottom: 10px;
@@ -111,7 +136,7 @@ main {
     border-radius: 5px;
 }
 
-.add-topic-form button, .add-postform button {
+.add-topic-form button, .add-post-form button {
     background-color: #007BFF;
     color: white;
     border: none;
@@ -140,6 +165,7 @@ main {
 #addTopicButton:hover {
     background-color: #0056b3;
 }
+
 .edit-post-form {
     display: none;
     margin-top: 10px;
@@ -165,32 +191,6 @@ main {
 .edit-post-form button:hover {
     background-color: #0056b3;
 }
-body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
-}
-a {
-    text-decoration: none;
-    color: black;
-}
-
-header {
-    background-color: #007BFF;
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: 'Montserrat', sans-serif;
-}
-header a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-}
 
 button {
     background-color: #007BFF;
@@ -204,6 +204,7 @@ button {
     width: 100%;
     font-family: 'Montserrat', sans-serif;
 }
+
 button:hover {
     background-color: #0056b3;
 }
@@ -214,6 +215,7 @@ button:hover {
     justify-content: center;
     margin-top: 10px;
 }
+
 .actions button {
     background-color: #f1f1f1;
     color: #333;
@@ -224,6 +226,7 @@ button:hover {
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
 }
+
 .actions button:hover {
     background-color: #ddd;
 }
