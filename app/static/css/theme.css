@@ -8,23 +8,25 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background: linear-gradient(135deg, #4A90E2, #8E44AD);
+    color: #fff;
 }
 
 a {
     text-decoration: none;
-    color: black;
+    color: #fff;
 }
 
 header {
-    background-color: #007BFF;
+    background-color: rgba(255, 255, 255, 0.1);
     color: white;
     padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 header a {
@@ -43,7 +45,7 @@ main {
 }
 
 button {
-    background-color: #007BFF;
+    background-color: #4A90E2;
     color: white;
     border: none;
     padding: 15px 30px;
@@ -53,23 +55,24 @@ button {
     margin-bottom: 20px;
     width: 100%;
     font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #3A7BD5;
 }
 
 .theme-title {
     font-size: 32px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #000;
+    color: #fff;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
 }
 
 .add-post-button {
-    background-color: #007BFF;
+    background-color: #4A90E2;
     color: white;
     border: none;
     padding: 15px 30px;
@@ -80,10 +83,11 @@ button:hover {
     width: 100%;
     max-width: 300px;
     font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s ease;
 }
 
 .add-post-button:hover {
-    background-color: #0056b3;
+    background-color: #3A7BD5;
 }
 
 .posts {
@@ -94,13 +98,14 @@ button:hover {
 }
 
 .post {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 15px;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 15px;
     position: relative;
     word-wrap: break-word;
+    backdrop-filter: blur(10px);
 }
 
 .post-title {
@@ -121,7 +126,7 @@ button:hover {
 
 .add-post-form, .edit-post-form {
     display: none;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -129,6 +134,7 @@ button:hover {
     max-width: 800px;
     margin-top: 20px;
     box-sizing: border-box;
+    backdrop-filter: blur(10px);
 }
 
 .input-group {
@@ -141,9 +147,11 @@ button:hover {
     width: 100%;
     padding: 10px;
     margin-right: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 5px;
     box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
 }
 
 .file-upload-wrapper {
@@ -158,7 +166,7 @@ button:hover {
 }
 
 .file-upload-wrapper:hover {
-    background-color: #f1f1f1;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .file-upload-wrapper input[type="file"] {
@@ -173,11 +181,11 @@ button:hover {
 
 .file-upload-wrapper .upload-icon {
     font-size: 24px;
-    color: #007BFF;
+    color: #4A90E2;
 }
 
 .add-post-form button, .edit-post-form button {
-    background-color: #007BFF;
+    background-color: #4A90E2;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -186,10 +194,11 @@ button:hover {
     width: 100%;
     box-sizing: border-box;
     font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .add-post-form button:hover, .edit-post-form button:hover {
-    background-color: #0056b3;
+    background-color: #3A7BD5;
 }
 
 #photoPreview {
@@ -216,16 +225,18 @@ button:hover {
 }
 
 .actions button {
-    background-color: #f1f1f1;
-    color: #333;
-    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s ease;
 }
 
 .actions button:hover {
-    background-color: #ddd;
+    background-color: rgba(255, 255, 255, 0.2);
 }
+
