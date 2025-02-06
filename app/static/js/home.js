@@ -53,11 +53,14 @@ document.addEventListener('click', function(event) {
         const topicId = event.target.getAttribute('data-topic-id');
         const topicName = event.target.getAttribute('data-topic-name');
         const editForm = event.target.parentElement.nextElementSibling;
+        const input = editForm.querySelector('.editTopicContent');
+
+        input.value = ''; // Очистка поля ввода
+        input.placeholder = 'Введите новое название темы'; // Установка placeholder
         editForm.style.display = 'block';
-        editForm.querySelector('.editTopicContent').value = topicName;
 
         editForm.querySelector('.saveEditTopicButton').addEventListener('click', function() {
-            const newTopicName = editForm.querySelector('.editTopicContent').value;
+            const newTopicName = input.value;
 
             if (newTopicName) {
                 fetch('/edit_topic', {
@@ -115,11 +118,14 @@ document.addEventListener('click', function(event) {
         const postId = event.target.getAttribute('data-post-id');
         const postName = event.target.getAttribute('data-post-name');
         const editForm = event.target.parentElement.nextElementSibling;
+        const input = editForm.querySelector('.editPostContent');
+
+        input.value = ''; // Очистка поля ввода
+        input.placeholder = 'Введите новую запись'; // Установка placeholder
         editForm.style.display = 'block';
-        editForm.querySelector('.editPostContent').value = postName;
 
         editForm.querySelector('.saveEditPostButton').addEventListener('click', function() {
-            const newPostContent = editForm.querySelector('.editPostContent').value;
+            const newPostContent = input.value;
 
             if (newPostContent) {
                 fetch('/edit_post', {
