@@ -1,3 +1,38 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+header {
+    background-color: #007BFF;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -6,6 +41,24 @@ main {
     max-width: 1200px;
     margin: auto;
 }
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
 .theme-title {
     font-size: 32px;
     font-weight: bold;
@@ -14,6 +67,7 @@ main {
     text-align: center;
     font-family: 'Montserrat', sans-serif;
 }
+
 .add-post-button {
     background-color: #007BFF;
     color: white;
@@ -27,19 +81,16 @@ main {
     max-width: 300px;
     font-family: 'Montserrat', sans-serif;
 }
+
 .add-post-button:hover {
     background-color: #0056b3;
 }
+
 .posts {
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 0;
     width: 100%;
     max-width: 800px;
     margin-top: 20px;
-    background-color: transparent; /* Убираем фон */
-    box-shadow: none; /* Убираем тень */
-    padding: 0; /* Убираем отступы */
 }
 
 .post {
@@ -51,6 +102,7 @@ main {
     position: relative;
     word-wrap: break-word;
 }
+
 .post-title {
     font-size: 24px;
     font-weight: bold;
@@ -58,12 +110,14 @@ main {
     text-align: center;
     font-family: 'Montserrat', sans-serif;
 }
+
 .post img {
     display: block;
     margin: 0 auto 10px;
     max-width: 500px;
     border-radius: 5px;
 }
+
 .add-post-form, .edit-post-form {
     display: none;
     background-color: white;
@@ -75,11 +129,13 @@ main {
     margin-top: 20px;
     box-sizing: border-box;
 }
+
 .input-group {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
+
 .input-group input[type="text"] {
     width: 100%;
     padding: 10px;
@@ -88,6 +144,7 @@ main {
     border-radius: 5px;
     box-sizing: border-box;
 }
+
 .file-upload-wrapper {
     position: relative;
     overflow: hidden;
@@ -98,9 +155,11 @@ main {
     transition: background-color 0.3s;
     box-sizing: border-box;
 }
+
 .file-upload-wrapper:hover {
     background-color: #f1f1f1;
 }
+
 .file-upload-wrapper input[type="file"] {
     position: absolute;
     left: 0;
@@ -110,10 +169,12 @@ main {
     height: 100%;
     cursor: pointer;
 }
+
 .file-upload-wrapper .upload-icon {
     font-size: 24px;
     color: #007BFF;
 }
+
 .add-post-form button, .edit-post-form button {
     background-color: #007BFF;
     color: white;
@@ -125,11 +186,11 @@ main {
     box-sizing: border-box;
     font-size: 16px;
 }
+
 .add-post-form button:hover, .edit-post-form button:hover {
     background-color: #0056b3;
 }
 
-/* Стили для миниатюры в форме */
 #photoPreview {
     max-width: 200px;
     max-height: 200px;
@@ -138,11 +199,32 @@ main {
     margin: 10px auto;
 }
 
-/* Стили для загруженного изображения в посте */
 .post img.post-image {
     max-width: 500px;
     max-height: 500px;
     object-fit: cover;
     display: block;
     margin: 10px auto;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.actions button {
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.actions button:hover {
+    background-color: #ddd;
 }
