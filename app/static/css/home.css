@@ -99,10 +99,11 @@ main {
 }
 
 .pinned-post img {
-    max-width: 100%;
+    display: block;
+    margin: 10px auto;
+    width: 300px;
     height: auto;
     border-radius: 5px;
-    margin-top: 10px;
 }
 
 .add-topic-form, .add-post-form, .edit-topic-form, .edit-post-form {
