@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная страница</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/styles.css">
+<!--    <link rel="stylesheet" href="/static/css/styles.css">-->
     <link rel="stylesheet" href="/static/css/home.css">
 </head>
 <body>
@@ -56,11 +56,10 @@
                     <button class="unpinPostButton" data-post-id="{{ post.id }}">Открепить</button>
                     <button class="deletePostButton" data-post-id="{{ post.id }}">Удалить</button>
                 </div>
-                <div class="add-postform edit-post-form" style="display: none;">
+                <div class="add-post-form edit-post-form" style="display: none;">
                     <input type="text" class="editPostContent" placeholder="Введите новое название записи">
-                    <button class="saveeditPostButton">Сохранить</button>
+                    <button class="saveEditPostButton">Сохранить</button>
                 </div>
-
             </div>
             {% endfor %}
         </div>

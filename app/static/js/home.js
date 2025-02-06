@@ -118,21 +118,22 @@ document.addEventListener('click', function(event) {
         editForm.style.display = 'block';
         editForm.querySelector('.editPostContent').value = postName;
 
-        editForm.querySelector('.saveeditPostButton').addEventListener('click', function() {
-            const newPostName = editForm.querySelector('.editPostContent').value;
+        editForm.querySelector('.saveEditPostButton').addEventListener('click', function() {
+            const newPostContent = editForm.querySelector('.editPostContent').value;
 
-            if (newPostName) {
+            if (newPostContent) {
                 fetch('/edit_post', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ postId: postId, postName: newPostName })
+                    body: JSON.stringify({ postId: postId, postContent: newPostContent })
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        event.target.parentElement.previousElementSibling.textContent = newPostName;
+                        const postDiv = event.target.closest('.pinned-post');
+                        postDiv.querySelector('.post-title').textContent = newPostContent;
                         editForm.style.display = 'none';
                     } else {
                         alert(data.message);
@@ -174,7 +175,6 @@ document.addEventListener('click', function(event) {
     if (event.target && event.target.classList.contains('unpinPostButton')) {
         const postId = event.target.getAttribute('data-post-id');
 
-        // Удаляем вызов confirm
         fetch('/unpin_post', {
             method: 'POST',
             headers: {
@@ -194,48 +194,5 @@ document.addEventListener('click', function(event) {
         .catch(error => {
             console.error('Error:', error);
         });
-    }
-
-    if (event.target && event.target.classList.contains('pinPostButton')) {
-        const postId = event.target.getAttribute('data-post-id');
-        const postName = event.target.getAttribute('data-post-name');
-
-        if (confirm('Вы уверены, что хотите закрепить эту запись?')) {
-            fetch('/pin_post', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ postId: postId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const postDiv = document.createElement('div');
-                    postDiv.className = 'pinned-post';
-                    postDiv.innerHTML = `
-                        <div class="post-title">${postName}</div>
-                        <div class="actions">
-                            <button class="editPostButton" data-post-id="${postId}" data-post-name="${postName}">Редактировать</button>
-                            <button class="unpinPostButton" data-post-id="${postId}">Открепить</button>
-                            <button class="deletePostButton" data-post-id="${postId}">Удалить</button>
-                        </div>
-                        <div class="add-postform edit-post-form" style="display: none;">
-                            <input type="text" class="editPostContent" placeholder="Введите новое название записи">
-                            <button class="saveeditPostButton">Сохранить</button>
-                        </div>
-                    `;
-
-                    // Добавляем новую закрепленную запись в начало списка
-                    const pinnedContainer = document.querySelector('.pinned');
-                    pinnedContainer.insertBefore(postDiv, pinnedContainer.firstChild);
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
     }
 });
