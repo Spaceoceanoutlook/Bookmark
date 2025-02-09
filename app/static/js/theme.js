@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!preview) {
                     preview = document.createElement('img');
                     preview.id = 'photoPreview';
-                    preview.classList.add('post-image'); // Добавляем нужный класс для миниатюры
+                    preview.classList.add('post-image');
                     document.getElementById('addPostForm').appendChild(preview);
                 }
                 preview.src = e.target.result;
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.photoFilename) {
                     const img = document.createElement('img');
                     img.src = `/static/uploads/${data.photoFilename}`;
-                    img.classList.add('post-image'); // Добавляем класс для изображений в постах
+                    img.classList.add('post-image');
                     postDiv.insertBefore(img, postDiv.querySelector('.actions'));
                 }
 
@@ -147,8 +147,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const input = editForm.querySelector('.editPostContent');
             const fileInput = editForm.querySelector('.editPostPhoto');
 
-            input.value = ''; // Очистка поля ввода
-            input.placeholder = 'Введите новую запись'; // Установка placeholder
+            // Получаем текст поста из data-атрибута кнопки редактирования
+            const postText = event.target.getAttribute('data-post-text');
+
+            input.value = postText || '';
+            input.placeholder = 'Введите новую запись';
             editForm.style.display = 'block';
 
             editForm.querySelector('.saveEditPostButton').onclick = function () {

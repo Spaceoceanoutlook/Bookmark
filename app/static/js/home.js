@@ -55,8 +55,8 @@ document.addEventListener('click', function(event) {
         const editForm = event.target.parentElement.nextElementSibling;
         const input = editForm.querySelector('.editTopicContent');
 
-        input.value = ''; // Очистка поля ввода
-        input.placeholder = 'Введите новое название темы'; // Установка placeholder
+        input.value = topicName;
+        input.placeholder = 'Введите новое название темы';
         editForm.style.display = 'block';
 
         editForm.querySelector('.saveEditTopicButton').addEventListener('click', function() {
@@ -120,8 +120,8 @@ document.addEventListener('click', function(event) {
         const editForm = event.target.parentElement.nextElementSibling;
         const input = editForm.querySelector('.editPostContent');
 
-        input.value = ''; // Очистка поля ввода
-        input.placeholder = 'Введите новую запись'; // Установка placeholder
+        input.value = postName;
+        input.placeholder = 'Введите новую запись';
         editForm.style.display = 'block';
 
         editForm.querySelector('.saveEditPostButton').addEventListener('click', function() {
