@@ -86,10 +86,18 @@ document.addEventListener('click', function(event) {
         });
     }
 
+    // Удаление темы
     if (event.target && event.target.classList.contains('deleteTopicButton')) {
         const topicId = event.target.getAttribute('data-topic-id');
+        const confirmationPopup = document.getElementById('confirmationPopup');
+        const confirmationOk = document.getElementById('confirmationOk');
+        const confirmationCancel = document.getElementById('confirmationCancel');
+        const confirmationMessage = document.getElementById('confirmationMessage');
 
-        if (confirm('Вы уверены, что хотите удалить эту тему?')) {
+        confirmationMessage.textContent = 'Вы уверены, что хотите удалить эту тему?';
+        confirmationPopup.style.display = 'block';
+
+        confirmationOk.onclick = function () {
             fetch('/delete_topic', {
                 method: 'POST',
                 headers: {
@@ -107,11 +115,17 @@ document.addEventListener('click', function(event) {
                 } else {
                     alert(data.message);
                 }
+                confirmationPopup.style.display = 'none';
             })
             .catch(error => {
                 console.error('Error:', error);
+                confirmationPopup.style.display = 'none';
             });
-        }
+        };
+
+        confirmationCancel.onclick = function () {
+            confirmationPopup.style.display = 'none';
+        };
     }
 
     if (event.target && event.target.classList.contains('editPostButton')) {
@@ -152,10 +166,18 @@ document.addEventListener('click', function(event) {
         });
     }
 
+    // Удаление записи
     if (event.target && event.target.classList.contains('deletePostButton')) {
         const postId = event.target.getAttribute('data-post-id');
+        const confirmationPopup = document.getElementById('confirmationPopup');
+        const confirmationOk = document.getElementById('confirmationOk');
+        const confirmationCancel = document.getElementById('confirmationCancel');
+        const confirmationMessage = document.getElementById('confirmationMessage');
 
-        if (confirm('Вы уверены, что хотите удалить эту запись?')) {
+        confirmationMessage.textContent = 'Вы уверены, что хотите удалить эту запись?';
+        confirmationPopup.style.display = 'block';
+
+        confirmationOk.onclick = function () {
             fetch('/delete_post', {
                 method: 'POST',
                 headers: {
@@ -171,11 +193,17 @@ document.addEventListener('click', function(event) {
                 } else {
                     alert(data.message);
                 }
+                confirmationPopup.style.display = 'none';
             })
             .catch(error => {
                 console.error('Error:', error);
+                confirmationPopup.style.display = 'none';
             });
-        }
+        };
+
+        confirmationCancel.onclick = function () {
+            confirmationPopup.style.display = 'none';
+        };
     }
 
     if (event.target && event.target.classList.contains('unpinPostButton')) {

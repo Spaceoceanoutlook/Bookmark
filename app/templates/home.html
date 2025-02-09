@@ -63,6 +63,16 @@
             {% endfor %}
         </div>
     </main>
+
+ <!-- Всплывающее окно подтверждения -->
+    <div class="confirmation-popup" id="confirmationPopup">
+        <div class="popup-message" id="confirmationMessage">Вы уверены, что хотите удалить эту запись?</div>
+        <div class="popup-buttons">
+            <button class="popup-button popup-button-ok" id="confirmationOk">ОК</button>
+            <button class="popup-button popup-button-cancel" id="confirmationCancel">ОТМЕНА</button>
+        </div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 </body>
 </html>
