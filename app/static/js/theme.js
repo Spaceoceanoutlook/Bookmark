@@ -95,29 +95,41 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(console.error);
     });
 
-    // Удаление поста
     document.addEventListener('click', function (event) {
-        if (event.target.classList.contains('deletePostButton')) {
-            const postId = event.target.closest('.post').dataset.postId;
+    if (event.target.classList.contains('deletePostButton')) {
+        const postId = event.target.closest('.post').dataset.postId;
+        const confirmationPopup = document.getElementById('confirmationPopup');
+        const confirmationOk = document.getElementById('confirmationOk');
+        const confirmationCancel = document.getElementById('confirmationCancel');
 
-            if (confirm('Вы уверены, что хотите удалить эту запись?')) {
-                fetch('/delete_post', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ postId: postId })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        event.target.closest('.post').remove();
-                    } else {
-                        alert(data.message);
-                    }
-                })
-                .catch(console.error);
-            }
-        }
-    });
+        confirmationPopup.style.display = 'block';
+
+        confirmationOk.onclick = function () {
+            fetch('/delete_post', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ postId: postId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Удалить элемент из DOM
+                    const postElement = event.target.closest('.post');
+                    postElement.remove();
+                } else {
+                    alert(data.message);
+                }
+                confirmationPopup.style.display = 'none';
+            })
+            .catch(console.error);
+        };
+
+        confirmationCancel.onclick = function () {
+            confirmationPopup.style.display = 'none';
+        };
+    }
+});
+
 
     // Закрепление поста
     document.addEventListener('click', function (event) {

@@ -54,6 +54,16 @@
             {% endfor %}
         </div>
     </main>
+
+    <!-- Всплывающее окно подтверждения -->
+    <div class="confirmation-popup" id="confirmationPopup">
+        <div class="popup-message">Вы уверены, что хотите удалить эту запись?</div>
+        <div class="popup-buttons">
+            <button class="popup-button popup-button-ok" id="confirmationOk">ОК</button>
+            <button class="popup-button popup-button-cancel" id="confirmationCancel">ОТМЕНА</button>
+        </div>
+    </div>
+
      <!-- Всплывающее окно -->
     <div class="popup" id="popup">
         <div class="popup-message">Закреплено</div>
