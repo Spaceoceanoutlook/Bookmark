@@ -121,23 +121,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Закрепление поста
     document.addEventListener('click', function (event) {
-        if (event.target.classList.contains('pinPostButton')) {
-            const postId = event.target.closest('.post').dataset.postId;
+    if (event.target.classList.contains('pinPostButton')) {
+        const postId = event.target.closest('.post').dataset.postId;
 
-            fetch('/pin_post', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ postId: postId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (!data.success) {
-                    alert(data.message);
-                }
-            })
-            .catch(console.error);
-        }
-    });
+        fetch('/pin_post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ postId: postId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Показать всплывающее окно на полсекунды
+                const popup = document.getElementById('popup');
+                popup.style.display = 'block';
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                }, 1000); // 1 секунда
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(console.error);
+    }
+});
+
 
     // Редактирование поста
     document.addEventListener('click', function (event) {
