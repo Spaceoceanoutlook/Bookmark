@@ -6,9 +6,9 @@ from sqlalchemy.orm import (
     mapped_column,
     validates,
 )
-from sqlalchemy.sql import func
 from typing import Optional, List
 from flask_login import UserMixin
+from time_utils import local_time
 
 Base = declarative_base()
 
@@ -74,7 +74,7 @@ class Post(Base):
     text: Mapped[str] = mapped_column(String, nullable=True)
     photo: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     created_at: Mapped[DateTime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
+        DateTime(timezone=True), server_default=local_time
     )
     pinned_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True), nullable=True, default=None

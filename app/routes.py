@@ -1,5 +1,4 @@
 import os
-from datetime import datetime, timezone
 
 from flask import (
     redirect,
@@ -13,6 +12,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy import desc
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import SessionLocal
+from time_utils import local_time
 from .models import User, Topic, Post
 from werkzeug.utils import secure_filename
 
@@ -310,7 +310,7 @@ def pin_post():
             )
             if post:
                 post.pinned = True
-                post.pinned_at = datetime.now(timezone.utc)
+                post.pinned_at = local_time
                 session.commit()
                 return jsonify({"success": True})
             else:

@@ -8,6 +8,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from config import Config
 from .models import Base, User
 
+
 app = Flask(__name__)
 app.config.from_object(Config)
 
