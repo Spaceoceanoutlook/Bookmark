@@ -11,7 +11,7 @@ body {
     background: linear-gradient(135deg, #F5F7FA, #C3CFE2);
     color: #333;
     min-height: 100vh;
-    padding-top: 80px; /* Add padding to the top of the body to account for the fixed header */
+    padding-top: 80px;
 }
 
 a {
@@ -30,7 +30,7 @@ header {
     justify-content: space-between;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
-    z-index: 1000; /* Ensure the header is above other content */
+    z-index: 1000;
 }
 
 header a {
@@ -43,7 +43,7 @@ header a {
 main {
     display: flex;
     justify-content: space-between;
-    padding: 20px; /* Adjust padding to ensure content is not hidden under the header */
+    padding: 20px;
     max-width: 1200px;
     margin: auto;
     gap: 20px;
@@ -77,7 +77,7 @@ main {
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 15px;
     border-radius: 8px;
-    text-align: center; /* Center text horizontally */
+    text-align: center;
     word-wrap: break-word;
     margin-bottom: 5px;
 }
@@ -127,8 +127,8 @@ main {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.add-topic-form input[type="text"], .add-post-form input[type="text"],
-.edit-topic-form input[type="text"], .edit-post-form input[type="text"] {
+.add-topic-form input[type="text"],
+.edit-topic-form input[type="text"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -138,8 +138,23 @@ main {
     color: #333;
 }
 
-.add-topic-form button, .add-post-form button,
-.edit-topic-form button, .edit-post-form button {
+.edit-post-form textarea {
+    width: 100%; /* Ширина на всю доступную область */
+    padding: 10px; /* Внутренний отступ */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Граница */
+    border-radius: 5px; /* Скругление углов */
+    background-color: rgba(255, 255, 255, 0.9); /* Цвет фона */
+    color: #333; /* Цвет текста */
+    resize: vertical; /* Разрешить изменение размера только по вертикали */
+    min-height: 65px; /* Минимальная высота */
+    font-family: inherit; /* Наследование шрифта */
+    font-size: inherit; /* Наследование размера шрифта */
+    margin-bottom: 10px; /* Отступ снизу, как у input */
+}
+
+.add-topic-form button,
+.edit-topic-form button,
+.edit-post-form button {
     background-color: #4A90E2;
     color: white;
     border: none;
@@ -151,8 +166,9 @@ main {
     transition: background-color 0.3s ease;
 }
 
-.add-topic-form button:hover, .add-post-form button:hover,
-.edit-topic-form button:hover, .edit-post-form button:hover {
+.add-topic-form button:hover,
+.edit-topic-form button:hover,
+.edit-post-form button:hover {
     background-color: #3A7BD5;
 }
 
@@ -176,7 +192,7 @@ main {
 .actions {
     display: flex;
     gap: 10px;
-    justify-content: center; /* Center buttons within .actions */
+    justify-content: center;
     margin-top: 10px;
 }
 

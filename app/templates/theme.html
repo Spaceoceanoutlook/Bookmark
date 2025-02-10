@@ -20,7 +20,7 @@
         <button class="add-post-button" id="addPostButton">Добавить новую запись</button>
         <div class="add-post-form" id="addPostForm" style="display: none;" data-topic-id="{{ topic.id }}">
             <div class="input-group">
-                <input type="text" id="postContent" placeholder="Введите запись">
+                <textarea id="postContent" placeholder="Введите запись"></textarea>
                 <label for="postPhoto" class="file-upload-wrapper">
                     <span class="upload-icon">📁</span>
                     <input type="file" id="postPhoto" accept="image/*">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="edit-post-form" style="display: none;">
                     <div class="input-group">
-                        <input type="text" class="editPostContent" placeholder="Введите новое название записи">
+                        <textarea class="editPostContent" placeholder="Введите новое название записи"></textarea>
                         <label for="editPostPhoto_{{ post.id }}" class="file-upload-wrapper">
                             <span class="upload-icon">📁</span>
                             <input type="file" id="editPostPhoto_{{ post.id }}" class="editPostPhoto" accept="image/*">

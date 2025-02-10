@@ -127,16 +127,20 @@ main {
     align-items: center;
     margin-bottom: 10px;
     gap: 10px;
-    justify-content: center; /* Center input group */
+    justify-content: center; /* Центрирование группы */
 }
 
-.input-group input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #333;
+.input-group textarea {
+    width: 100%; /* Ширина на всю доступную область */
+    padding: 10px; /* Внутренний отступ */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Граница */
+    border-radius: 5px; /* Скругление углов */
+    background-color: rgba(255, 255, 255, 0.9); /* Цвет фона */
+    color: #333; /* Цвет текста */
+    resize: vertical; /* Разрешить изменение размера только по вертикали */
+    min-height: 65px; /* Минимальная высота */
+    font-family: inherit; /* Наследование шрифта */
+    font-size: inherit; /* Наследование размера шрифта */
 }
 
 .file-upload-wrapper {
@@ -144,9 +148,9 @@ main {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.9);
     transition: background-color 0.3s ease;
 }
