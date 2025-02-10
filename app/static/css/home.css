@@ -11,6 +11,7 @@ body {
     background: linear-gradient(135deg, #F5F7FA, #C3CFE2);
     color: #333;
     min-height: 100vh;
+    padding-top: 80px; /* Add padding to the top of the body to account for the fixed header */
 }
 
 a {
@@ -19,7 +20,7 @@ a {
 }
 
 header {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: #FFFFFF; /* Solid white color */
     padding: 20px;
     position: fixed;
     top: 0;
@@ -29,6 +30,7 @@ header {
     justify-content: space-between;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
+    z-index: 1000; /* Ensure the header is above other content */
 }
 
 header a {
@@ -41,7 +43,7 @@ header a {
 main {
     display: flex;
     justify-content: space-between;
-    padding: 100px 20px 20px;
+    padding: 20px; /* Adjust padding to ensure content is not hidden under the header */
     max-width: 1200px;
     margin: auto;
     gap: 20px;

@@ -19,7 +19,7 @@ a {
 }
 
 header {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: #FFFFFF; /* Solid white color */
     padding: 20px;
     position: fixed;
     top: 0;
@@ -37,6 +37,7 @@ header a {
     margin-left: 20px;
     font-weight: bold;
 }
+
 
 main {
     display: flex;
