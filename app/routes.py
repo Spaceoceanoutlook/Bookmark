@@ -1,4 +1,6 @@
 import os
+from datetime import datetime, timezone
+
 from flask import (
     redirect,
     url_for,
@@ -91,7 +93,7 @@ def home():
         pinned_posts = (
             session.query(Post)
             .filter_by(pinned=True, user_id=current_user.id)
-            .order_by(desc(Post.id))
+            .order_by(desc(Post.pinned_at))
             .all()
         )
     except Exception as e:
@@ -308,6 +310,7 @@ def pin_post():
             )
             if post:
                 post.pinned = True
+                post.pinned_at = datetime.now(timezone.utc)
                 session.commit()
                 return jsonify({"success": True})
             else:
@@ -339,6 +342,7 @@ def unpin_post():
             )
             if post:
                 post.pinned = False
+                post.pinned_at = None
                 session.commit()
                 return jsonify({"success": True})
             else:

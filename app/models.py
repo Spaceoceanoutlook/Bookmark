@@ -76,6 +76,9 @@ class Post(Base):
     created_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
+    pinned_at: Mapped[DateTime] = mapped_column(
+        DateTime(timezone=True), nullable=True, default=None
+    )
     pinned: Mapped[bool] = mapped_column(Boolean, default=False)
 
     topic: Mapped[Topic] = relationship("Topic", back_populates="posts")
