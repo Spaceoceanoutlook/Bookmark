@@ -94,13 +94,13 @@ main {
 }
 
 .post-title {
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    text-align: justify;
-    text-align-last: center;
     font-family: 'Montserrat', sans-serif;
     color: #333;
+    text-align: justify;
+    white-space: pre-wrap;
 }
 
 .post img {
