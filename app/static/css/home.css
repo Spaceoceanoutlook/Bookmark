@@ -82,13 +82,23 @@ main {
     margin-bottom: 5px;
 }
 
-.topic-title, .post-title {
+.topic-title {
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 10px;
     font-family: 'Montserrat', sans-serif;
     color: #333;
-    text-align: center; /* Center title text */
+    text-align: center;
+}
+
+.post-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    text-align: justify;
+    text-align-last: center;
 }
 
 .section-title {

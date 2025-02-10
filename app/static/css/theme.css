@@ -90,14 +90,15 @@ main {
     border-radius: 8px;
     margin-bottom: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Center text within posts */
+    text-align: center;
 }
 
 .post-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
-    text-align: center; /* Center post titles */
+    text-align: justify;
+    text-align-last: center;
     font-family: 'Montserrat', sans-serif;
     color: #333;
 }
