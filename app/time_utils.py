@@ -6,4 +6,4 @@ local_tz = pytz.timezone("Asia/Yekaterinburg")
 
 
 def get_local_time():
-    return datetime.now(pytz.utc)
+    return datetime.now(local_tz)
