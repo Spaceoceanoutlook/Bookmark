@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="edit-post-form" style="display: none;">
                     <div class="input-group">
-                        <input type="text" class="editPostContent" placeholder="Введите новую запись">
+                        <textarea class="editPostContent" placeholder="Введите новую запись"></textarea>
                         <label for="editPostPhoto_${data.postId}" class="file-upload-wrapper">
                             <span class="upload-icon">📁</span>
                             <input type="file" id="editPostPhoto_${data.postId}" class="editPostPhoto" accept="image/*">
