@@ -244,6 +244,7 @@ def save_post():
                     "postId": new_post.id,
                     "postContent": new_post.text or "",
                     "photoFilename": new_post.photo,
+                    "createdAt": new_post.created_at.strftime("%d %B %Y, %H:%M"),
                 }
             )
         except Exception as e:

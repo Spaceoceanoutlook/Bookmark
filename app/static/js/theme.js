@@ -58,26 +58,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('addPostForm').style.display = 'none';
 
                 // Добавление поста в список
-                const postDiv = document.createElement('div');
-                postDiv.className = 'post';
-                postDiv.setAttribute('data-post-id', data.postId);
-                postDiv.innerHTML = `
-                    <div class="post-title">${data.postContent || ''}</div>
-                    <div class="actions">
-                        <button class="editPostButton" data-post-id="${data.postId}" data-post-text="${data.postContent || ''}">Редактировать</button>
-                        <button class="pinPostButton">Закрепить</button>
-                        <button class="deletePostButton">Удалить</button>
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post';
+            postDiv.setAttribute('data-post-id', data.postId);
+            postDiv.innerHTML = `
+                <div class="post-title">${data.postContent || ''}</div>
+                <div class="post-created-at">${data.createdAt}</div>
+                <div class="actions">
+                    <button class="editPostButton" data-post-id="${data.postId}" data-post-text="${data.postContent || ''}">Редактировать</button>
+                    <button class="pinPostButton">Закрепить</button>
+                    <button class="deletePostButton">Удалить</button>
+                </div>
+                <div class="edit-post-form" style="display: none;">
+                    <div class="input-group">
+                        <input type="text" class="editPostContent" placeholder="Введите новую запись">
+                        <label for="editPostPhoto_${data.postId}" class="file-upload-wrapper">
+                            <span class="upload-icon">📁</span>
+                            <input type="file" id="editPostPhoto_${data.postId}" class="editPostPhoto" accept="image/*">
+                        </label>
                     </div>
-                    <div class="edit-post-form" style="display: none;">
-                        <div class="input-group">
-                            <input type="text" class="editPostContent" placeholder="Введите новую запись">
-                            <label for="editPostPhoto_${data.postId}" class="file-upload-wrapper">
-                                <span class="upload-icon">📁</span>
-                                <input type="file" id="editPostPhoto_${data.postId}" class="editPostPhoto" accept="image/*">
-                            </label>
-                        </div>
-                        <button class="saveEditPostButton">Сохранить</button>
-                    </div>
+                    <button class="saveEditPostButton">Сохранить</button>
+                </div>
                 `;
 
                 if (data.photoFilename) {
