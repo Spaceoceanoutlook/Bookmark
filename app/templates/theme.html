@@ -18,7 +18,9 @@
     </header>
     <main>
         <div class="theme-title">{{ topic.name }}</div>
-        <button class="add-post-button" id="addPostButton">Добавить новую запись</button>
+        <button class="add-post-button" id="addPostButton">
+            Новая заметка
+        </button>
         <div class="add-post-form" id="addPostForm" style="display: none;" data-topic-id="{{ topic.id }}">
             <div class="input-group">
                 <textarea id="postContent" placeholder="Введите запись"></textarea>

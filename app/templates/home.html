@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная страница</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/home.css">
 </head>
@@ -19,7 +20,9 @@
     </header>
     <main>
         <div class="sidebar">
-            <button id="addTopicButton">Добавить новую тему</button>
+            <button id="addTopicButton">
+                Новая тема
+            </button>
             <div class="add-topic-form" id="addTopicForm">
                 <input type="text" id="topicContent" placeholder="Введите название темы">
                 <button id="saveTopicButton">Сохранить</button>
@@ -31,8 +34,10 @@
                         <a href="{{ url_for('theme', topic_id=topic.id) }}">{{ topic.name }}</a>
                     </div>
                     <div class="actions">
-                        <button class="editTopicButton" data-topic-id="{{ topic.id }}" data-topic-name="{{ topic.name }}">Редактировать</button>
-                        <button class="deleteTopicButton" data-topic-id="{{ topic.id }}">Удалить</button>
+                        <button class="editTopicButton" data-topic-id="{{ topic.id }}" data-topic-name="{{ topic.name }}">
+                            <i class="fas fa-edit"></i></button>
+                        <button class="deleteTopicButton" data-topic-id="{{ topic.id }}">
+                        <i class="fas fa-trash"></i></button>
                     </div>
                     <div class="add-topic-form edit-topic-form" style="display: none;">
                         <input type="text" class="editTopicContent" placeholder="Введите новое название темы">
@@ -51,9 +56,10 @@
                 <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image">
                 {% endif %}
                 <div class="actions">
-                    <button class="editPostButton" data-post-id="{{ post.id }}" data-post-name="{{ post.text }}">Редактировать</button>
-                    <button class="unpinPostButton" data-post-id="{{ post.id }}">Открепить</button>
-                    <button class="deletePostButton" data-post-id="{{ post.id }}">Удалить</button>
+                    <button class="editPostButton" data-post-id="{{ post.id }}" data-post-text="{{ post.text }}">
+                        <i class="fas fa-edit"></i></button>
+                    <button class="unpinPostButton" data-post-id="{{ post.id }}"> <i class="fas fa-times-circle"></i></button>
+                    <button class="deletePostButton"><i class="fas fa-trash"></i></button>
                 </div>
                 <div class="add-post-form edit-post-form" style="display: none;">
                     <textarea class="editPostContent" placeholder="Введите новое название записи"></textarea>

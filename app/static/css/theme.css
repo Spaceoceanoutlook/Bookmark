@@ -186,8 +186,8 @@ main {
 
 .actions {
     display: flex;
-    gap: 10px;
-    justify-content: center; /* Center action buttons */
+    gap: 5px;
+    justify-content: right;
     margin-top: 10px;
 }
 

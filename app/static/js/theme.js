@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 postDiv.setAttribute('data-post-id', data.postId);
                 postDiv.innerHTML = `
                     <div class="post-title">${data.postContent || ''}</div>
-                    <div class="post-created-at">${data.createdAt}</div>
                     <div class="actions">
                         <button class="editPostButton" data-post-id="${data.postId}" data-post-text="${data.postContent || ''}">
                             <i class="fas fa-edit"></i>
@@ -74,7 +73,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         <button class="deletePostButton">
                             <i class="fas fa-trash"></i>
                         </button>
+
                     </div>
+                    <div class="post-created-at">${data.createdAt}</div>
                     <div class="edit-post-form" style="display: none;">
                         <div class="input-group">
                             <textarea class="editPostContent" placeholder="Введите новую запись"></textarea>
