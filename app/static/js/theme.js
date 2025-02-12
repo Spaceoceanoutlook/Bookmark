@@ -97,8 +97,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.addEventListener('click', function (event) {
-    if (event.target.classList.contains('deletePostButton')) {
-        const postId = event.target.closest('.post').dataset.postId;
+    const deleteButton = event.target.closest('.deletePostButton');
+    if (deleteButton) {
+        const postId = deleteButton.closest('.post').dataset.postId;
         const confirmationPopup = document.getElementById('confirmationPopup');
         const confirmationOk = document.getElementById('confirmationOk');
         const confirmationCancel = document.getElementById('confirmationCancel');
@@ -134,8 +135,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Закрепление поста
     document.addEventListener('click', function (event) {
-    if (event.target.classList.contains('pinPostButton')) {
-        const postId = event.target.closest('.post').dataset.postId;
+    const pinButton = event.target.closest('.pinPostButton');
+    if (pinButton) {
+        const postId = pinButton.closest('.post').dataset.postId;
 
         fetch('/pin_post', {
             method: 'POST',
@@ -162,7 +164,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Редактирование поста
     document.addEventListener('click', function (event) {
-        if (event.target.classList.contains('editPostButton')) {
+        const editButton = event.target.closest('.editPostButton');
+        if (editButton) {
             const post = event.target.closest('.post');
             const editForm = post.querySelector('.edit-post-form');
             const input = editForm.querySelector('.editPostContent');
