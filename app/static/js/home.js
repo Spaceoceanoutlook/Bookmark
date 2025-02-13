@@ -148,7 +148,7 @@ document.addEventListener('click', function(event) {
 
     if (editPostButton) {
         const postId = editPostButton.getAttribute('data-post-id');
-        const postName = editPostButton.getAttribute('data-post-name');
+        const postName = editPostButton.getAttribute('data-post-text');
         const editForm = editPostButton.closest('.pinned-post').querySelector('.edit-post-form');
         const input = editForm.querySelector('.editPostContent');
 

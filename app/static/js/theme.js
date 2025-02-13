@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const fileInput = editForm.querySelector('.editPostPhoto');
 
             // Получаем текст поста из data-атрибута кнопки редактирования
-            const postText = event.target.getAttribute('data-post-text');
+            const postText = editButton.getAttribute('data-post-text');
 
             input.value = postText || '';
             input.placeholder = 'Введите новую запись';
