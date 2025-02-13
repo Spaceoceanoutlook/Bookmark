@@ -59,7 +59,7 @@
                     <button class="editPostButton" data-post-id="{{ post.id }}" data-post-text="{{ post.text }}">
                         <i class="fas fa-edit"></i></button>
                     <button class="unpinPostButton" data-post-id="{{ post.id }}"> <i class="fas fa-times-circle"></i></button>
-                    <button class="deletePostButton"><i class="fas fa-trash"></i></button>
+                    <button class="deletePostButton" data-post-id="{{ post.id }}"><i class="fas fa-trash"></i></button>
                 </div>
                 <div class="add-post-form edit-post-form" style="display: none;">
                     <textarea class="editPostContent" placeholder="Введите новое название записи"></textarea>
