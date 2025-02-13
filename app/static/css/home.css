@@ -257,3 +257,11 @@ main {
 .confirmation-popup .popup-button-cancel:hover {
     background-color: #5a6268; /* Темно-серый цвет при наведении */
 }
+
+.post-created-at {
+    font-size: 12px; /* Мелкий шрифт */
+    color: #666; /* Серый цвет текста */
+    margin-top: 5px; /* Отступ сверху */
+    font-style: italic; /* Курсив */
+    text-align: right; /* Выравнивание по правому краю */
+}
