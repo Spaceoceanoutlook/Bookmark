@@ -101,43 +101,43 @@ document.querySelector('.topics').addEventListener('click', function(event) {
     }
 
     if (deleteButton) {
-        const topicId = deleteButton.getAttribute('data-topic-id');
-        const confirmationPopup = document.getElementById('confirmationPopup');
-        const confirmationOk = document.getElementById('confirmationOk');
-        const confirmationCancel = document.getElementById('confirmationCancel');
-        const confirmationMessage = document.getElementById('confirmationMessage');
+    const topicId = deleteButton.getAttribute('data-topic-id');
+    const confirmationPopup = document.getElementById('confirmationPopup');
+    const confirmationOk = document.getElementById('confirmationOk');
+    const confirmationCancel = document.getElementById('confirmationCancel');
+    const confirmationMessage = document.getElementById('confirmationMessage');
 
-        confirmationMessage.textContent = 'Вы уверены, что хотите удалить эту тему?';
-        confirmationPopup.style.display = 'block';
+    confirmationMessage.textContent = 'Вы уверены, что хотите удалить эту тему?';
+    confirmationPopup.style.display = 'block';
 
-        confirmationOk.onclick = function () {
-            fetch('/delete_topic', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ topicId: topicId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const topicDiv = deleteButton.closest('.topic');
-                    topicDiv.remove();
-                } else {
-                    alert(data.message);
-                }
-                confirmationPopup.style.display = 'none';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                confirmationPopup.style.display = 'none';
-            });
-        };
-
-        confirmationCancel.onclick = function () {
+    confirmationOk.onclick = function () {
+        fetch('/delete_topic', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ topicId: topicId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Перезагрузка страницы после успешного удаления
+                location.reload();
+            } else {
+                alert(data.message);
+            }
             confirmationPopup.style.display = 'none';
-        };
-    }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            confirmationPopup.style.display = 'none';
+        });
+    };
+
+    confirmationCancel.onclick = function () {
+        confirmationPopup.style.display = 'none';
+    };
+}
 });
 
 // Обработка редактирования и удаления постов
