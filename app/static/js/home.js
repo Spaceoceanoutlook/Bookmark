@@ -23,7 +23,7 @@ document.getElementById('saveTopicButton').addEventListener('click', function() 
                     <div class="topic-title">
                         <a href="/theme/${data.topicId}">${data.topicName}</a>
                     </div>
-                    <div class="actions">
+                    <div class="actions-topic">
                         <button class="editTopicButton" data-topic-id="${data.topicId}" data-topic-name="${data.topicName}">
                             <i class="fas fa-edit"></i>
                         </button>

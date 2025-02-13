@@ -16,11 +16,11 @@ body {
 
 a {
     text-decoration: none;
-    color: #4A90E2;
+    color: #333;
 }
 
 header {
-    background-color: #FFFFFF; /* Solid white color */
+    background-color: #FFFFFF;
     padding: 20px;
     position: fixed;
     top: 0;
@@ -82,8 +82,9 @@ main {
     margin-bottom: 5px;
 }
 
+
 .topic-title {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
     font-family: 'Montserrat', sans-serif;
@@ -189,6 +190,27 @@ main {
     background-color: #3A7BD5;
 }
 
+.actions-topic {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.actions-topic button {
+    background-color: transparent; /* Убираем фоновый цвет */
+    color: #4A90E2; /* Цвет текста (иконок) */
+    border: none; /* Убираем рамку */
+    padding: 0; /* Убираем отступы, если нужно */
+    cursor: pointer; /* Указываем, что это кнопка */
+    font-size: 14px; /* Размер шрифта */
+    transition: color 0.3s ease; /* Плавный переход цвета */
+}
+
+.actions-topic .editTopicButton {
+    margin-right: 10px; /* Увеличиваем расстояние между кнопками */
+}
+
 .actions {
     display: flex;
     gap: 5px;
@@ -199,16 +221,12 @@ main {
 .actions button {
     background-color: rgba(255, 255, 255, 0.9);
     color: #4A90E2;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: none; /* Убираем рамку */
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s ease;
-}
-
-.actions button:hover {
-    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .confirmation-popup {
