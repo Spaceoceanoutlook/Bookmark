@@ -60,6 +60,9 @@ main {
 .sidebar {
     flex: 1;
     max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .pinned {
@@ -69,7 +72,8 @@ main {
 .topics {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 10px; /* Расстояние между темами */
+    width: 100%;
 }
 
 .topic, .pinned-post {
@@ -79,9 +83,9 @@ main {
     border-radius: 8px;
     text-align: center;
     word-wrap: break-word;
-    margin-bottom: 5px;
+    margin-bottom: 10px; /* Расстояние между постами и темами */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень, как в theme.css */
 }
-
 
 .post-title {
     font-size: 16px;
@@ -131,17 +135,17 @@ main {
 }
 
 .edit-post-form textarea {
-    width: 100%; /* Ширина на всю доступную область */
-    padding: 10px; /* Внутренний отступ */
-    border: 1px solid rgba(0, 0, 0, 0.1); /* Граница */
-    border-radius: 5px; /* Скругление углов */
-    background-color: rgba(255, 255, 255, 0.9); /* Цвет фона */
-    color: #333; /* Цвет текста */
-    resize: vertical; /* Разрешить изменение размера только по вертикали */
-    min-height: 65px; /* Минимальная высота */
-    font-family: inherit; /* Наследование шрифта */
-    font-size: inherit; /* Наследование размера шрифта */
-    margin-bottom: 10px; /* Отступ снизу, как у input */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    resize: vertical;
+    min-height: 65px;
+    font-family: inherit;
+    font-size: inherit;
+    margin-bottom: 10px;
 }
 
 .add-topic-form button,
@@ -168,13 +172,16 @@ main {
     background-color: #4A90E2;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 15px 30px;
+    font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    width: 100%;
     margin-bottom: 20px;
+    width: auto;
+    max-width: 190px;
+    font-family: 'Montserrat', sans-serif;
     transition: background-color 0.3s ease;
+    text-align: center;
 }
 
 #addTopicButton:hover {
@@ -199,7 +206,7 @@ main {
 
 .actions-topic {
     display: flex;
-    gap: 10px; /* Это свойство задает расстояние между кнопками */
+    gap: 10px;
     justify-content: flex-end;
     margin-left: 10px;
 }
@@ -208,7 +215,7 @@ main {
     background-color: transparent;
     color: #4A90E2;
     border: none;
-    padding: 0; /* Возможно, здесь padding: 0 */
+    padding: 0;
     cursor: pointer;
     font-size: 14px;
 }
@@ -255,7 +262,7 @@ main {
 }
 
 .confirmation-popup .popup-button {
-    background-color: #dc3545; /* Красный цвет для кнопки "ОК" */
+    background-color: #dc3545;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -265,21 +272,21 @@ main {
 }
 
 .confirmation-popup .popup-button:hover {
-    background-color: #c82333; /* Темно-красный цвет при наведении */
+    background-color: #c82333;
 }
 
 .confirmation-popup .popup-button-cancel {
-    background-color: #6c757d; /* Серый цвет для кнопки "ОТМЕНА" */
+    background-color: #6c757d;
 }
 
 .confirmation-popup .popup-button-cancel:hover {
-    background-color: #5a6268; /* Темно-серый цвет при наведении */
+    background-color: #5a6268;
 }
 
 .post-created-at {
-    font-size: 12px; /* Мелкий шрифт */
-    color: #666; /* Серый цвет текста */
-    margin-top: 5px; /* Отступ сверху */
-    font-style: italic; /* Курсив */
-    text-align: right; /* Выравнивание по правому краю */
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    font-style: italic;
+    text-align: right;
 }
