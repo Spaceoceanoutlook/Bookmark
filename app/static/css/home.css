@@ -83,15 +83,6 @@ main {
 }
 
 
-.topic-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    font-family: 'Montserrat', sans-serif;
-    color: #333;
-    text-align: center;
-}
-
 .post-title {
     font-size: 16px;
     font-weight: bold;
@@ -190,30 +181,42 @@ main {
     background-color: #3A7BD5;
 }
 
+.topic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.topic-title {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    text-align: left;
+    flex-grow: 1;
+}
+
 .actions-topic {
     display: flex;
-    gap: 5px;
-    justify-content: center;
-    margin-top: 10px;
+    gap: 10px; /* Это свойство задает расстояние между кнопками */
+    justify-content: flex-end;
+    margin-left: 10px;
 }
 
 .actions-topic button {
-    background-color: transparent; /* Убираем фоновый цвет */
-    color: #4A90E2; /* Цвет текста (иконок) */
-    border: none; /* Убираем рамку */
-    padding: 0; /* Убираем отступы, если нужно */
-    cursor: pointer; /* Указываем, что это кнопка */
-    font-size: 14px; /* Размер шрифта */
-    transition: color 0.3s ease; /* Плавный переход цвета */
-}
-
-.actions-topic .editTopicButton {
-    margin-right: 10px; /* Увеличиваем расстояние между кнопками */
+    background-color: transparent;
+    color: #4A90E2;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.3s ease;
 }
 
 .actions {
     display: flex;
-    gap: 5px;
+    gap: 10px;
     justify-content: right;
     margin-top: 10px;
 }

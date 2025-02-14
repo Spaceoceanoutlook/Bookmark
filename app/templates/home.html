@@ -30,20 +30,24 @@
             <div class="topics">
                 {% for topic in topics %}
                 <div class="topic">
-                    <div class="topic-title">
-                        <a href="{{ url_for('theme', topic_id=topic.id) }}">{{ topic.name }}</a>
-                    </div>
-                    <div class="actions-topic">
-                        <button class="editTopicButton" data-topic-id="{{ topic.id }}" data-topic-name="{{ topic.name }}">
-                            <i class="fas fa-edit"></i></button>
-                        <button class="deleteTopicButton" data-topic-id="{{ topic.id }}">
-                        <i class="fas fa-trash"></i></button>
-                    </div>
-                    <div class="add-topic-form edit-topic-form" style="display: none;">
-                        <input type="text" class="editTopicContent" placeholder="Введите новое название темы">
-                        <button class="saveEditTopicButton">Сохранить</button>
-                    </div>
-                </div>
+    <div class="topic-header">
+        <div class="topic-title">
+            <a href="{{ url_for('theme', topic_id=topic.id) }}">{{ topic.name }}</a>
+        </div>
+        <div class="actions-topic">
+            <button class="editTopicButton" data-topic-id="{{ topic.id }}" data-topic-name="{{ topic.name }}">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="deleteTopicButton" data-topic-id="{{ topic.id }}">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    </div>
+    <div class="add-topic-form edit-topic-form" style="display: none;">
+        <input type="text" class="editTopicContent" placeholder="Введите новое название темы">
+        <button class="saveEditTopicButton">Сохранить</button>
+    </div>
+</div>
                 {% endfor %}
             </div>
         </div>

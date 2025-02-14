@@ -19,17 +19,21 @@ document.getElementById('saveTopicButton').addEventListener('click', function() 
             if (data.success) {
                 const topicDiv = document.createElement('div');
                 topicDiv.className = 'topic';
+
+                // Создаем структуру с контейнером topic-header
                 topicDiv.innerHTML = `
-                    <div class="topic-title">
-                        <a href="/theme/${data.topicId}">${data.topicName}</a>
-                    </div>
-                    <div class="actions-topic">
-                        <button class="editTopicButton" data-topic-id="${data.topicId}" data-topic-name="${data.topicName}">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="deleteTopicButton" data-topic-id="${data.topicId}">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <a href="/theme/${data.topicId}">${data.topicName}</a>
+                        </div>
+                        <div class="actions-topic">
+                            <button class="editTopicButton" data-topic-id="${data.topicId}" data-topic-name="${data.topicName}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="deleteTopicButton" data-topic-id="${data.topicId}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="add-topic-form edit-topic-form" style="display: none;">
                         <input type="text" class="editTopicContent" placeholder="Введите новое название темы">
@@ -41,6 +45,7 @@ document.getElementById('saveTopicButton').addEventListener('click', function() 
                 const topicsContainer = document.querySelector('.topics');
                 topicsContainer.insertBefore(topicDiv, topicsContainer.firstChild);
 
+                // Скрываем форму и очищаем поле ввода
                 document.getElementById('addTopicForm').style.display = 'none';
                 document.getElementById('topicContent').value = '';
             } else {
