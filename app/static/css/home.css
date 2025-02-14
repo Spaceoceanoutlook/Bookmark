@@ -224,7 +224,7 @@ main {
     background-color: transparent;
     color: #4A90E2;
     border: none;
-    padding: 0; /* Возможно, здесь padding: 0 */
+    padding: 0;
     cursor: pointer;
     font-size: 14px;
 }
