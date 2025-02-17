@@ -13,6 +13,8 @@ alembic = "^1.14.1"
 flask-login = "^0.6.3"
 flask-session = "^0.8.0"
 pytz = "^2025.1"
+requests = "^2.32.3"
+bs4 = "^0.0.2"
 
 
 [tool.poetry.group.dev.dependencies]
