@@ -12,7 +12,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy import desc
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import SessionLocal
-from .time_utils import get_local_time, link_search
+from .utils import get_local_time, link_search
 from .models import User, Topic, Post
 from werkzeug.utils import secure_filename
 

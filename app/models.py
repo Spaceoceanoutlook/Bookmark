@@ -8,7 +8,7 @@ from sqlalchemy.orm import (
 )
 from typing import Optional, List
 from flask_login import UserMixin
-from .time_utils import get_local_time
+from .utils import get_local_time
 
 Base = declarative_base()
 

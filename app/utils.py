@@ -13,5 +13,5 @@ def link_search(t: str):
     words = t.split()
     for index, word in enumerate(words):
         if word.startswith('https://'):
-            words[index] = f'<a href="{word}">{word}</a>'
+            words[index] = f'<a href="{word}" target="_blank" rel="noopener noreferrer">{word}</a>'
     return ' '.join(words)
