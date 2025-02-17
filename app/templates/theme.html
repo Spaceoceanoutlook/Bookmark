@@ -34,7 +34,7 @@
         <div class="posts" id="posts">
             {% for post in posts %}
             <div class="post" data-post-id="{{ post.id }}">
-                <div class="post-title">{{ post.text }}</div>
+                <div class="post-title">{{ post.text|safe }}</div>
                 {% if post.photo %}
                 <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image" class="post-image">
                 {% endif %}

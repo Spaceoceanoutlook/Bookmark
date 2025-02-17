@@ -55,7 +55,7 @@
             <div class="section-title">Закрепленные записи</div>
             {% for post in pinned_posts %}
             <div class="pinned-post">
-                <div class="post-title">{{ post.text }}</div>
+                <div class="post-title">{{ post.text|safe }}</div>
                 {% if post.photo %}
                 <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image">
                 {% endif %}

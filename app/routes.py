@@ -12,7 +12,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy import desc
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import SessionLocal
-from .time_utils import get_local_time
+from .time_utils import get_local_time, link_search
 from .models import User, Topic, Post
 from werkzeug.utils import secure_filename
 
@@ -218,6 +218,7 @@ def theme(topic_id):
 @login_required
 def save_post():
     post_content = request.form.get("postContent")
+    post_content = link_search(post_content)
     topic_id = request.form.get("topicId")
     post_photo = request.files.get("postPhoto")
 
