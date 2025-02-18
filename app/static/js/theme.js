@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const formData = new FormData();
         formData.append('topicId', topicId);
+        formData.append('postContent', postContent || '');
         if (postContent) {
             formData.append('postContent', postContent);
         }
