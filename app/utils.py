@@ -27,13 +27,13 @@ def get_title(url):
         'Referer': 'https://www.google.com/',
     }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, timeout=10)
     response.encoding = response.apparent_encoding
     time.sleep(random.uniform(1, 3))
 
     soup = BeautifulSoup(response.text, 'html.parser')
-    time.sleep(random.uniform(1, 3))
-    title = soup.title.string if soup.title else url
+    security_phrases = ['Are you not a robot?', 'Antibot Challenge Page', 'Вы не робот?']
+    title = soup.title.string if soup.title.string not in security_phrases else url
     return title
 
 def link_search(t: str):
