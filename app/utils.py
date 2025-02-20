@@ -41,7 +41,11 @@ def get_title(url):
         "Вы не робот?",
         "Доступ ограничен",
     ]
-    title = soup.title.string if soup.title.string not in security_phrases else url
+    title = soup.title
+    if title:
+        title = soup.title.string if soup.title.string not in security_phrases else url
+    else:
+        title = url
     return title
 
 
