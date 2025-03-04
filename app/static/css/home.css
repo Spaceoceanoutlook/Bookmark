@@ -72,7 +72,6 @@ main {
 .topics {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Расстояние между темами */
     width: 100%;
 }
 
