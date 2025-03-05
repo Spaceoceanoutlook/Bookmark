@@ -157,7 +157,6 @@ function deleteTopic(deleteButton) {
     };
 }
 
-// Функция для отображения формы редактирования поста
 function showEditPostForm(editPostButton) {
     const postId = editPostButton.getAttribute('data-post-id');
     const postName = editPostButton.getAttribute('data-post-text');
@@ -175,9 +174,12 @@ function showEditPostForm(editPostButton) {
             fetch('/edit_post', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: JSON.stringify({ postId: postId, postContent: newPostContent })
+                body: new URLSearchParams({
+                    postId: postId,
+                    postContent: newPostContent
+                })
             })
             .then(response => response.json())
             .then(data => {
