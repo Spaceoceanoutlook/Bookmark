@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmationCancel = document.getElementById('confirmationCancel');
     const popup = document.getElementById('popup');
 
+    if (!addPostButton || !addPostForm || !postPhotoInput || !savePostButton || !postsContainer || !confirmationPopup || !confirmationOk || !confirmationCancel || !popup) {
+        console.error('Один или несколько элементов DOM не найдены');
+        return;
+    }
+
     addPostButton.addEventListener('click', showAddPostForm);
     postPhotoInput.addEventListener('change', handlePhotoChange);
     savePostButton.addEventListener('click', saveNewPost);
@@ -44,33 +49,45 @@ document.addEventListener('DOMContentLoaded', function () {
         return `photo_${timestamp}_${randomNumber}.${fileExtension}`;
     }
 
-    function saveNewPost() {
-    const postContent = document.getElementById('postContent').value;
-    const postPhoto = postPhotoInput.files[0];
-    const topicId = addPostForm.dataset.topicId;
+    async function saveNewPost() {
+        const postContent = document.getElementById('postContent').value;
+        const postPhoto = postPhotoInput.files[0];
+        const topicId = addPostForm.dataset.topicId;
 
-    const formData = new FormData();
-    formData.append('topicId', topicId);
-    formData.append('postContent', postContent || '');
-    if (postPhoto) {
-        const randomName = generateRandomFileName(postPhoto.name); // Генерация случайного имени
-        formData.append('postPhoto', postPhoto, randomName);
-    }
-
-    fetch('/save_post', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            clearAddPostForm();
-            createPostElement(data);
-        } else {
-            alert(data.message);
+        if (!postContent && !postPhoto) {
+            alert('Поле не может быть пустым');
+            return;
         }
-    })
-    .catch(console.error);
+
+        const formData = new FormData();
+        formData.append('topicId', topicId);
+        formData.append('postContent', postContent || '');
+        if (postPhoto) {
+            const randomName = generateRandomFileName(postPhoto.name); // Генерация случайного имени
+            formData.append('postPhoto', postPhoto, randomName);
+        }
+
+        try {
+            const response = await fetch('/save_post', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error('Ошибка сети или сервера');
+            }
+
+            const data = await response.json();
+            if (data.success) {
+                clearAddPostForm();
+                createPostElement(data);
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка при сохранении поста');
+        }
     }
 
     function clearAddPostForm() {
@@ -141,23 +158,31 @@ document.addEventListener('DOMContentLoaded', function () {
         const postId = button.closest('.post').dataset.postId;
         confirmationPopup.style.display = 'block';
 
-        confirmationOk.onclick = function () {
-            fetch('/delete_post', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ postId: postId })
-            })
-            .then(response => response.json())
-            .then(data => {
+        confirmationOk.onclick = async function () {
+            try {
+                const response = await fetch('/delete_post', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ postId: postId })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Ошибка сети или сервера');
+                }
+
+                const data = await response.json();
                 if (data.success) {
                     const postElement = button.closest('.post');
                     postElement.remove();
                 } else {
                     alert(data.message);
                 }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при удалении поста');
+            } finally {
                 confirmationPopup.style.display = 'none';
-            })
-            .catch(console.error);
+            }
         };
 
         confirmationCancel.onclick = function () {
@@ -165,16 +190,21 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    function handlePinPost(button) {
+    async function handlePinPost(button) {
         const postId = button.closest('.post').dataset.postId;
 
-        fetch('/pin_post', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ postId: postId })
-        })
-        .then(response => response.json())
-        .then(data => {
+        try {
+            const response = await fetch('/pin_post', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ postId: postId })
+            });
+
+            if (!response.ok) {
+                throw new Error('Ошибка сети или сервера');
+            }
+
+            const data = await response.json();
             if (data.success) {
                 popup.style.display = 'block';
                 setTimeout(() => {
@@ -183,60 +213,74 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 alert(data.message);
             }
-        })
-        .catch(console.error);
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка при закреплении поста');
+        }
     }
 
     function handleEditPost(button) {
-    const post = button.closest('.post');
-    const editForm = post.querySelector('.edit-post-form');
-    const input = editForm.querySelector('.editPostContent');
-    const fileInput = editForm.querySelector('.editPostPhoto');
+        const post = button.closest('.post');
+        const editForm = post.querySelector('.edit-post-form');
+        const input = editForm.querySelector('.editPostContent');
+        const fileInput = editForm.querySelector('.editPostPhoto');
 
-    const postText = button.getAttribute('data-post-text');
-    input.value = postText || '';
-    input.placeholder = 'Введите новую запись';
-    editForm.style.display = 'block';
+        const postText = button.getAttribute('data-post-text');
+        input.value = postText || '';
+        input.placeholder = 'Введите новую запись';
+        editForm.style.display = 'block';
 
-    editForm.querySelector('.saveEditPostButton').onclick = function () {
-        const newPostContent = input.value;
-        const newPostPhoto = fileInput.files[0];
+        editForm.querySelector('.saveEditPostButton').onclick = async function () {
+            const newPostContent = input.value;
+            const newPostPhoto = fileInput.files[0];
 
-        const formData = new FormData();
-        formData.append('postId', post.dataset.postId);
-        if (newPostContent) {
-            formData.append('postContent', newPostContent);
-        }
-        if (newPostPhoto) {
-            formData.append('postPhoto', newPostPhoto);
-        }
-
-        fetch('/edit_post', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                post.querySelector('.post-title').textContent = newPostContent || '';
-                editForm.style.display = 'none';
-
-                if (data.photoFilename) {
-                    const img = post.querySelector('img');
-                    if (img) {
-                        img.src = `/static/uploads/${data.photoFilename}`;
-                    } else {
-                        const newImg = document.createElement('img');
-                        newImg.src = `/static/uploads/${data.photoFilename}`;
-                        newImg.classList.add('post-image');
-                        post.insertBefore(newImg, post.querySelector('.actions'));
-                    }
-                }
-            } else {
-                alert(data.message);
+            if (!newPostContent && !newPostPhoto) {
+                alert('Поле не может быть пустым');
+                return;
             }
-        })
-        .catch(console.error);
-    };
-}
+
+            const formData = new FormData();
+            formData.append('postId', post.dataset.postId);
+            if (newPostContent) {
+                formData.append('postContent', newPostContent);
+            }
+            if (newPostPhoto) {
+                formData.append('postPhoto', newPostPhoto);
+            }
+
+            try {
+                const response = await fetch('/edit_post', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Ошибка сети или сервера');
+                }
+
+                const data = await response.json();
+                if (data.success) {
+                    post.querySelector('.post-title').textContent = newPostContent || '';
+                    editForm.style.display = 'none';
+
+                    if (data.photoFilename) {
+                        const img = post.querySelector('img');
+                        if (img) {
+                            img.src = `/static/uploads/${data.photoFilename}`;
+                        } else {
+                            const newImg = document.createElement('img');
+                            newImg.src = `/static/uploads/${data.photoFilename}`;
+                            newImg.classList.add('post-image');
+                            post.insertBefore(newImg, post.querySelector('.actions'));
+                        }
+                    }
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при редактировании поста');
+            }
+        };
+    }
 });
