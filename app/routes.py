@@ -363,9 +363,8 @@ def unpin_post():
 @app.route("/edit_post", methods=["POST"])
 @login_required
 def edit_post():
-    data = request.get_json()
-    post_id = data.get("postId")
-    post_content = data.get("postContent")
+    post_id = request.form.get("postId")
+    post_content = request.form.get("postContent")
 
     if post_id:
         session = SessionLocal()
