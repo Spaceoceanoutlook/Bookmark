@@ -36,32 +36,41 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Функция для генерации случайного имени файла
+    function generateRandomFileName(originalFileName) {
+        const timestamp = new Date().getTime(); // Текущее время в миллисекундах
+        const randomNumber = Math.floor(Math.random() * 10000); // Случайное число от 0 до 9999
+        const fileExtension = originalFileName.split('.').pop(); // Получаем расширение файла
+        return `photo_${timestamp}_${randomNumber}.${fileExtension}`;
+    }
+
     function saveNewPost() {
-        const postContent = document.getElementById('postContent').value;
-        const postPhoto = postPhotoInput.files[0];
-        const topicId = addPostForm.dataset.topicId;
+    const postContent = document.getElementById('postContent').value;
+    const postPhoto = postPhotoInput.files[0];
+    const topicId = addPostForm.dataset.topicId;
 
-        const formData = new FormData();
-        formData.append('topicId', topicId);
-        formData.append('postContent', postContent || '');
-        if (postPhoto) {
-            formData.append('postPhoto', postPhoto);
+    const formData = new FormData();
+    formData.append('topicId', topicId);
+    formData.append('postContent', postContent || '');
+    if (postPhoto) {
+        const randomName = generateRandomFileName(postPhoto.name); // Генерация случайного имени
+        formData.append('postPhoto', postPhoto, randomName);
+    }
+
+    fetch('/save_post', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            clearAddPostForm();
+            createPostElement(data);
+        } else {
+            alert(data.message);
         }
-
-        fetch('/save_post', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                clearAddPostForm();
-                createPostElement(data);
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(console.error);
+    })
+    .catch(console.error);
     }
 
     function clearAddPostForm() {
