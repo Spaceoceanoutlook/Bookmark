@@ -67,6 +67,8 @@ main {
 
 .pinned {
     flex: 2;
+    width: 100%;
+    max-width: 800px;
 }
 
 .topics {
@@ -94,6 +96,9 @@ main {
     color: #333;
     text-align: justify;
     white-space: pre-wrap;
+    word-wrap: break-word; /* Перенос длинных слов */
+    overflow-wrap: break-word; /* Альтернатива для word-wrap */
+    overflow: hidden; /* Скрыть содержимое, выходящее за пределы */
 }
 
 .section-title {
