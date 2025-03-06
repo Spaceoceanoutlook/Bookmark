@@ -222,6 +222,16 @@ function showEditPostForm(editPostButton) {
     if (input && editForm) {
         input.value = postName;
         input.placeholder = 'Введите новую запись';
+
+        const inputValue = input.value.trim();
+        if (inputValue.includes('<a href')) {
+            linknotchanges.style.display = 'block';
+            setTimeout(() => {
+                linknotchanges.style.display = 'none';
+            }, 1000);
+            return;
+        }
+
         editForm.style.display = 'block';
 
         editForm.querySelector('.saveEditPostButton').addEventListener('click', async () => {

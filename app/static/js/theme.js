@@ -224,12 +224,21 @@ document.addEventListener('DOMContentLoaded', function () {
         const editForm = post.querySelector('.edit-post-form');
         const input = editForm.querySelector('.editPostContent');
         const fileInput = editForm.querySelector('.editPostPhoto');
-
         const postText = button.getAttribute('data-post-text');
+
         input.value = postText || '';
         input.placeholder = 'Введите новую запись';
-        editForm.style.display = 'block';
 
+        const inputValue = input.value.trim();
+        if (inputValue.includes('<a href')) {
+            linknotchanges.style.display = 'block';
+            setTimeout(() => {
+                linknotchanges.style.display = 'none';
+            }, 1000);
+            return;
+        }
+
+        editForm.style.display = 'block';
         editForm.querySelector('.saveEditPostButton').onclick = async function () {
             const newPostContent = input.value;
             const newPostPhoto = fileInput.files[0];
