@@ -40,9 +40,17 @@
                 {% endif %}
                 <div class="actions">
                     <button class="editPostButton" data-post-id="{{ post.id }}" data-post-text="{{ post.text }}">
-                        <i class="fas fa-edit"></i></button>
-                    <button class="pinPostButton"><i class="fas fa-thumbtack"></i> </button>
-                    <button class="deletePostButton"><i class="fas fa-trash"></i></button>
+                        <i class="fas fa-edit"></i>
+                        <span class="tooltiptext">Редактировать</span>
+                    </button>
+                    <button class="pinPostButton">
+                        <i class="fas fa-thumbtack"></i>
+                        <span class="tooltiptext">Закрепить</span>
+                    </button>
+                    <button class="deletePostButton">
+                        <i class="fas fa-trash"></i>
+                        <span class="tooltiptext">Удалить</span>
+                    </button>
                 </div>
                 <div class="post-created-at">{{ post.created_at.strftime('%d %B %Y, %H:%M') }}</div>
                 <div class="edit-post-form" style="display: none;">

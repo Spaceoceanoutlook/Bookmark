@@ -302,3 +302,35 @@ linknotchanges-message {
     font-style: italic; /* Курсив */
     text-align: right; /* Выравнивание по правому краю */
 }
+
+/* Стили для подписей (tooltips) */
+
+.actions button {
+    position: relative; /* Для позиционирования подписи */
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Подпись выше кнопки */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap; /* Чтобы текст не переносился */
+    font-size: 12px; /* Размер текста подписи */
+}
+
+.editPostButton:hover .tooltiptext,
+.pinPostButton:hover .tooltiptext,
+.deletePostButton:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
