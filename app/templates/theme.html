@@ -34,7 +34,7 @@
         <div class="posts" id="posts">
             {% for post in posts %}
             <div class="post" data-post-id="{{ post.id }}">
-                <div id="textBlock" class="post-title">{{ post.text|safe }}</div>
+                <div id="textBlock" class="post-title">{{ post.text | safe }}</div>
                 <button class="toggleButton hidden">Показать больше</button>
                 {% if post.photo %}
                 <img src="{{ url_for('static', filename='uploads/' + post.photo) }}" alt="Post Image" class="post-image">

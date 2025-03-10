@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="post-title">${data.postContent || ''}</div>
             <button class="toggleButton hidden">Показать больше</button>
             <div class="actions">
-                <button class="editPostButton" data-post-text="${data.postContent || ''}">
+                <button class="editPostButton">
                     <i class="fas fa-edit"></i>
                 </button>
                 <button class="pinPostButton">
