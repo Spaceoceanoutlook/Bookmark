@@ -41,11 +41,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Функция для генерации случайного имени файла
     function generateRandomFileName(originalFileName) {
-        const timestamp = new Date().getTime(); // Текущее время в миллисекундах
-        const randomNumber = Math.floor(Math.random() * 10000); // Случайное число от 0 до 9999
-        const fileExtension = originalFileName.split('.').pop(); // Получаем расширение файла
+        const timestamp = new Date().getTime();
+        const randomNumber = Math.floor(Math.random() * 10000);
+        const fileExtension = originalFileName.split('.').pop();
         return `photo_${timestamp}_${randomNumber}.${fileExtension}`;
     }
 
@@ -63,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('topicId', topicId);
         formData.append('postContent', postContent || '');
         if (postPhoto) {
-            const randomName = generateRandomFileName(postPhoto.name); // Генерация случайного имени
+            const randomName = generateRandomFileName(postPhoto.name);
             formData.append('postPhoto', postPhoto, randomName);
         }
 
@@ -106,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         postDiv.setAttribute('data-post-id', data.postId);
         postDiv.innerHTML = `
             <div class="post-title">${data.postContent || ''}</div>
+            <button class="toggleButton hidden">Показать больше</button>
             <div class="actions">
                 <button class="editPostButton" data-post-text="${data.postContent || ''}">
                     <i class="fas fa-edit"></i>
@@ -138,6 +138,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         postsContainer.prepend(postDiv);
+
+        // Добавляем логику для сворачивания/разворачивания текста
+        const textBlock = postDiv.querySelector('.post-title');
+        const toggleButton = postDiv.querySelector('.toggleButton');
+
+        const computedStyle = window.getComputedStyle(textBlock);
+        const lineHeight = parseFloat(computedStyle.lineHeight) || 20;
+        const maxHeight = lineHeight * 3;
+        const scrollHeight = textBlock.scrollHeight;
+
+        if (scrollHeight > maxHeight) {
+            toggleButton.classList.remove('hidden');
+
+            toggleButton.addEventListener('click', function () {
+                textBlock.classList.toggle('expanded');
+                this.textContent = textBlock.classList.contains('expanded') ? 'Скрыть' : 'Показать больше';
+            });
+        }
     }
 
     function handlePostActions(event) {
