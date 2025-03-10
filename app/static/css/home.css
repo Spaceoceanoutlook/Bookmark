@@ -89,6 +89,11 @@ main {
 }
 
 .post-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    transition: all 0.3s ease;
+
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
@@ -100,6 +105,15 @@ main {
     overflow-wrap: break-word; /* Альтернатива для word-wrap */
     overflow: hidden; /* Скрыть содержимое, выходящее за пределы */
 }
+
+.expanded {
+  -webkit-line-clamp: unset; /* Показываем весь текст */
+}
+
+.hidden {
+  display: none;
+}
+
 
 .section-title {
     color: #4A90E2;
@@ -349,4 +363,21 @@ main {
 .deleteTopicButton:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+}
+
+.toggleButton {
+    background: transparent;
+    color: #4A90E2;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+}
+
+.toggleButton:hover {
+    color: #357ABD;
 }
