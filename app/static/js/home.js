@@ -225,10 +225,13 @@ function showEditPostForm(editPostButton) {
 
         const inputValue = input.value.trim();
         if (inputValue.includes('<a href')) {
-            linknotchanges.style.display = 'block';
-            setTimeout(() => {
-                linknotchanges.style.display = 'none';
-            }, 1000);
+            const linknotchanges = document.getElementById('linknotchanges');
+            if (linknotchanges) {
+                linknotchanges.style.display = 'block';
+                setTimeout(() => {
+                    linknotchanges.style.display = 'none';
+                }, 1000);
+            }
             return;
         }
 
@@ -370,4 +373,24 @@ document.addEventListener('DOMContentLoaded', function () {
     if (saveTopicButton) {
         saveTopicButton.addEventListener('click', handleSaveTopic);
     }
+
+    // Перенесенный скрипт из шаблона
+    let textBlocks = document.querySelectorAll(".post-title");
+    let buttons = document.querySelectorAll(".toggleButton");
+
+    textBlocks.forEach((textBlock, index) => {
+        let computedStyle = window.getComputedStyle(textBlock);
+        let lineHeight = parseFloat(computedStyle.lineHeight) || 20;
+        let maxHeight = lineHeight * 3;
+        let scrollHeight = textBlock.scrollHeight;
+
+        if (scrollHeight > maxHeight) {
+            buttons[index].classList.remove("hidden");
+
+            buttons[index].addEventListener("click", function () {
+                textBlock.classList.toggle("expanded");
+                this.textContent = textBlock.classList.contains("expanded") ? "Скрыть" : "Показать больше";
+            });
+        }
+    });
 });

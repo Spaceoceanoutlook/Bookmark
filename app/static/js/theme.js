@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmationOk = document.getElementById('confirmationOk');
     const confirmationCancel = document.getElementById('confirmationCancel');
     const popup = document.getElementById('popup');
+    const linknotchanges = document.getElementById('linknotchanges');
 
-    if (!addPostButton || !addPostForm || !postPhotoInput || !savePostButton || !postsContainer || !confirmationPopup || !confirmationOk || !confirmationCancel || !popup) {
+    if (!addPostButton || !addPostForm || !postPhotoInput || !savePostButton || !postsContainer || !confirmationPopup || !confirmationOk || !confirmationCancel || !popup || !linknotchanges) {
         console.error('Один или несколько элементов DOM не найдены');
         return;
     }
@@ -310,4 +311,24 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         };
     }
+
+    // Добавляем логику для сворачивания/разворачивания текста
+    let textBlocks = document.querySelectorAll(".post-title");
+    let buttons = document.querySelectorAll(".toggleButton");
+
+    textBlocks.forEach((textBlock, index) => {
+        let computedStyle = window.getComputedStyle(textBlock);
+        let lineHeight = parseFloat(computedStyle.lineHeight) || 20;
+        let maxHeight = lineHeight * 3;
+        let scrollHeight = textBlock.scrollHeight;
+
+        if (scrollHeight > maxHeight) {
+            buttons[index].classList.remove("hidden");
+
+            buttons[index].addEventListener("click", function () {
+                textBlock.classList.toggle("expanded");
+                this.textContent = textBlock.classList.contains("expanded") ? "Скрыть" : "Показать больше";
+            });
+        }
+    });
 });

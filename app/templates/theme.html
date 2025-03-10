@@ -88,31 +88,6 @@
         <div class="linknotchanges-message">Ссылку нельзя изменить</div>
     </div>
 
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        let textBlocks = document.querySelectorAll(".post-title");
-        let buttons = document.querySelectorAll(".toggleButton");
-
-        textBlocks.forEach((textBlock, index) => {
-          let computedStyle = window.getComputedStyle(textBlock);
-          let lineHeight = parseFloat(computedStyle.lineHeight) || 20;
-          let maxHeight = lineHeight * 3;
-          let scrollHeight = textBlock.scrollHeight;
-
-          console.log(`Блок ${index}: lineHeight=${lineHeight}, maxHeight=${maxHeight}, scrollHeight=${scrollHeight}`);
-
-          if (scrollHeight > maxHeight) {
-            buttons[index].classList.remove("hidden");
-
-            buttons[index].addEventListener("click", function () {
-              textBlock.classList.toggle("expanded");
-              this.textContent = textBlock.classList.contains("expanded") ? "Скрыть" : "Показать больше";
-            });
-          }
-        });
-      });
-    </script>
     <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
 </body>
 </html>
