@@ -179,10 +179,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         confirmationOk.onclick = async function () {
             try {
-                const response = await fetch('/delete_post', {
-                    method: 'POST',
+                const response = await fetch(`/delete_post/${postId}`, {
+                    method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ postId: postId })
                 });
 
                 if (!response.ok) {

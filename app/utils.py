@@ -22,8 +22,8 @@ def get_local_time():
 @lru_cache(maxsize=100)
 def get_title(url: str) -> str:
     # Добавляем протокол, если его нет
-    if not url.startswith(('http://', 'https://')):
-        url = 'http://' + url
+    if not url.startswith(("http://", "https://")):
+        url = "http://" + url
 
     # Список User-Agent для обхода блокировок
     user_agents = [
@@ -68,9 +68,10 @@ def get_title(url: str) -> str:
     except requests.exceptions.RequestException:
         return url
 
+
 def link_search(t: str) -> str:
     # Регулярное выражение для поиска ссылок
-    url_pattern = re.compile(r'https?://\S+|www\.\S+|\b\S+\.\S{2,}\b')
+    url_pattern = re.compile(r"https?://\S+|www\.\S+|\b\S+\.\S{2,}\b")
 
     def replace_link(match):
         url = match.group(0)
@@ -80,4 +81,6 @@ def link_search(t: str) -> str:
     processed_text = url_pattern.sub(replace_link, t)
 
     # Санитизируем текст, разрешая только теги <a> и атрибуты href, target, rel
-    return bleach.clean(processed_text, tags=['a'], attributes={'a': ['href', 'target', 'rel']})
+    return bleach.clean(
+        processed_text, tags=["a"], attributes={"a": ["href", "target", "rel"]}
+    )

@@ -187,12 +187,11 @@ function deleteTopic(deleteButton) {
 
     showConfirmationPopup('Вы уверены, что хотите удалить эту тему?', async () => {
         try {
-            const response = await fetch('/delete_topic', {
-                method: 'POST',
+            const response = await fetch(`/delete_topic/${topicId}`, {
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ topicId: topicId })
             });
 
             if (!response.ok) {
@@ -283,12 +282,11 @@ function deletePost(deletePostButton) {
 
     showConfirmationPopup('Вы уверены, что хотите удалить эту запись?', async () => {
         try {
-            const response = await fetch('/delete_post', {
-                method: 'POST',
+            const response = await fetch(`/delete_post/${postId}`, {
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ postId: postId })
             });
 
             if (!response.ok) {

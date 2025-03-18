@@ -162,12 +162,9 @@ def edit_topic():
         return jsonify({"success": False, "message": "Topic ID and name are required"})
 
 
-@app.route("/delete_topic", methods=["POST"])
+@app.route("/delete_topic/<int:topic_id>", methods=["DELETE"])
 @login_required
-def delete_topic():
-    data = request.json
-    topic_id = data.get("topicId")
-
+def delete_topic(topic_id):
     if topic_id:
         session = SessionLocal()
         try:
@@ -261,12 +258,9 @@ def save_post():
         )
 
 
-@app.route("/delete_post", methods=["POST"])
+@app.route("/delete_post/<int:post_id>", methods=["DELETE"])
 @login_required
-def delete_post():
-    data = request.json
-    post_id = data.get("postId")
-
+def delete_post(post_id):
     if post_id:
         session = SessionLocal()
         try:
@@ -276,24 +270,29 @@ def delete_post():
                 .first()
             )
             if post:
+                # Удаление фотографии, если она есть
                 if post.photo:
                     photo_path = os.path.join(app.config["UPLOAD_FOLDER"], post.photo)
                     if os.path.exists(photo_path):
                         os.remove(photo_path)
+                # Удаление поста
                 session.delete(post)
                 session.commit()
                 return jsonify({"success": True})
             else:
-                return jsonify({"success": False, "message": "Post not found"})
+                return jsonify({"success": False, "message": "Post not found"}), 404
         except Exception as e:
             session.rollback()
-            return jsonify(
-                {"success": False, "message": f"Failed to delete post: {str(e)}"}
+            return (
+                jsonify(
+                    {"success": False, "message": f"Failed to delete post: {str(e)}"}
+                ),
+                500,
             )
         finally:
             session.close()
     else:
-        return jsonify({"success": False, "message": "Post ID is required"})
+        return jsonify({"success": False, "message": "Post ID is required"}), 400
 
 
 @app.route("/pin_post", methods=["POST"])
